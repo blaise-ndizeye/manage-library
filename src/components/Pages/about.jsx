@@ -1,0 +1,25 @@
+import React from 'react'
+import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import Cards from './UnAuthPages/Cards'
+import Loader from '../pageEffect/loader'
+
+const About = (props) => {
+    const { isAunthenticated, isLoading } = props
+    if (isLoading) {
+        return <Loader />
+    }
+    else if (!isAunthenticated) {
+        return <Cards />
+    }
+    else {
+        return <Redirect to="/"/>
+    }
+    
+}
+const mapStateToProps = state => ({
+    isAunthenticated: state.auth.isAunthenticated,
+    isLoading: state.auth.isLoading
+})
+ 
+export default connect(mapStateToProps)(About);
