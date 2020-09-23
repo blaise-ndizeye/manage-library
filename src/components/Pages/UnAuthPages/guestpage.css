@@ -1,7 +1,57 @@
-.jumbotron-image {
-    background-position: center center;
-    background-repeat: no-repeat;
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h2 {
+    font-size: 40px;
+    font-weight: 200;
+    margin: 10px;
+}
+
+h2 span {
+    font-size: 30px;
+}
+
+p {
+    font-size: 20px;
+}
+
+Link {
+    text-decoration: none;
+}
+
+
+.cont {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 0px;
+    background: transparent;
+    color: #fff;
+    font-family: 'Roboto', sans-serif;
+}
+
+.cont > div {
+    height: 100vh;
     background-size: cover;
-    background-image: url('../AuthPages/images/bg3.jpg');
-    border-radius: 0%;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+.cont > div:nth-of-type(1) {
+    grid-column: 1 / 3;
+}
+
+.cont > div:nth-of-type(6) {
+    grid-column: 3 / 5;
+}
+
+.bg4 {
+    background: transparent;
 }

@@ -102,7 +102,7 @@ class EditBookModal extends Component {
         const { numOfBooks, typeOfBooks } = this.props
         return (<>
 
-            <Button outline color="dark" onClick={this.toggle} >
+            <Button outline color="primary" onClick={this.toggle} >
                 <AiOutlineEdit />
             </Button>
 

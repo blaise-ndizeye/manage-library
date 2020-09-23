@@ -131,7 +131,7 @@ class EditStudentModal extends Component {
         const { firstName, lastName, Class, gender, age } = this.props
         return (<>
 
-            <Button outline color="dark" onClick={this.toggle} >
+            <Button outline color="primary" onClick={this.toggle} >
                 <AiOutlineEdit />
             </Button>
 

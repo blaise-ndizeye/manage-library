@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Table, Container } from 'reactstrap'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { BsFillPersonLinesFill } from 'react-icons/bs'
+import { BsFillPeopleFill } from 'react-icons/bs'
 
 import ListRecords from './listRecords'
 import Loader from '../../../pageEffect/loader'
@@ -53,11 +53,11 @@ class StudentRecordsList extends Component {
             return <Redirect to="/" />
         }
         return <Container>
-            <h2 className="display-5"><BsFillPersonLinesFill /> Students' Records List</h2>
+            <h2 className="display-5 text-primary"><BsFillPeopleFill /> Students' Records List</h2>
             <div style={{ marginBottom: '20px' }}>
                 <InputForm setQ={this.onChange} q={this.state.q} />
             </div>
-            <Table responsive className="table-hover">
+            <Table responsive className="table-hover table-dark">
                 <thead color="dark">
                     <tr>
                         <th>Index</th>

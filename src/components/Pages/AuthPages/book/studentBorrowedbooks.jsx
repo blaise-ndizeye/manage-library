@@ -43,11 +43,11 @@ const StudentBorrowedBooks = (props) => {
     }
 
     return <Container>
-        <h2 className="display-5"><GoBook /> Students' Borrowed Books List</h2>
+        <h2 className="display-5 text-primary"><GoBook /> Students' Borrowed Books List</h2>
         <div style={{ marginBottom: '20px' }}>
             <InputForm setQ={setQ} q={q} />
         </div>
-        <Table responsive className="table-hover">
+        <Table responsive className="table-hover table-dark">
             <thead color="dark">
                 <tr>
                     <th>Index</th>

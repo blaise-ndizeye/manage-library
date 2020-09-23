@@ -5,7 +5,7 @@
   width: 40%; /* Full-width */
   font-size: 16px; /* Increase font-size */
   padding: 12px 20px 12px 40px; /* Add some padding */
-  border: 1px solid #ddd; /* Add a grey border */
+  border: transparent; /* Add a grey border */
   margin-bottom: 30px;
   margin-left: 10px; /* Add some space below the input */
 }

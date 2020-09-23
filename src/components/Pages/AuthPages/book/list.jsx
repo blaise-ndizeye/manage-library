@@ -50,11 +50,11 @@ class BookList extends Component {
         }
 
         return <Container>
-            <h2 className="display-5"><GoBook /> Books List</h2>
+            <h2 className="display-5 text-primary"><GoBook /> Books List</h2>
             <div style={{ marginBottom: '20px' }}>
                 <InputForm setQ={this.onChange} q={this.state.q} />
             </div>
-            <Table responsive className="table-hover">
+            <Table responsive className="table-hover table-dark">
                 <thead color="dark">
                     <tr>
                         <th>Index</th>

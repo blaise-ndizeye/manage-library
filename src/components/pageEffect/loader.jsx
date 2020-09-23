@@ -11,7 +11,7 @@ const Loader = (props) => {
     justifyContent: 'center'
   }
   return (
-    <div className="d-flex justify-content-center bg-dark" style={loaderStyle}>
+    <div className="d-flex justify-content-center bg-transparent" style={loaderStyle}>
       <div className="spinner-border text-primary" style={{ width: '9rem', height: '9rem' }} role="status">
         <span className="sr-only">Loading...</span>
       </div>

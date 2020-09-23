@@ -6,7 +6,7 @@ import ListItem from './listItem'
 import Loader from '../../../pageEffect/loader'
 import { teacherSuccess, teacherListSearch } from '../../../actions/teacher/teacherAction'
 import InputForm from '../student/input'
-import { BsFillPersonLinesFill } from 'react-icons/bs'
+import { BsFillPeopleFill } from 'react-icons/bs'
 
 const TeacherList = (props) => {
 
@@ -48,11 +48,11 @@ const TeacherList = (props) => {
     }
 
     return <Container>
-        <h2 className="display-5"><BsFillPersonLinesFill /> Teacher's List</h2>
+        <h2 className="display-5 text-primary"><BsFillPeopleFill /> Teacher's List</h2>
         <div style={{ marginBottom: '20px' }}>
             <InputForm setQ={setQ} q={q} />
         </div>
-        <Table responsive className="table-hover">
+        <Table responsive className="table-hover table-dark">
             <thead color="dark">
                 <tr>
                     <th>Index</th>

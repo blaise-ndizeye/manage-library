@@ -95,7 +95,7 @@ class AddBookModal extends Component {
     render() {
         return (<>
 
-            <Button outline color="light" onClick={this.toggle} >
+            <Button outline color="primary" onClick={this.toggle} >
                 <BsPlusCircleFill /> Add books
         </Button>
 

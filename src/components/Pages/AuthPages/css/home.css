@@ -28,7 +28,7 @@ Link {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 0px;
-    background: #333;
+    background: transparent;
     color: #fff;
     font-family: 'Roboto', sans-serif;
 }
@@ -43,6 +43,7 @@ Link {
     justify-content: center;
     text-align: center;
     transition: all 0.5s ease-in;
+    background: transparent;
 }
 
 .contain > div:hover {
@@ -59,10 +60,14 @@ Link {
 }
 
 .bg1 {
-    background: url('../images/bg1.jpg')
+    background: transparent;
 }
 .bg2 {
-    background: url('../images/bg2.jpg')
+    background: transparent;
+}
+
+.bg4 {
+    background: transparent;
 }
 
 .bg1 Link {

@@ -89,8 +89,9 @@ const Settings = (props) => {
             </Link></p>
         </div>
         <div className="bg1 col-md-7 col-sm-12">
-            <h2 className="text-warning"><AiOutlineWarning /> Once you delete your Account all data will be lost!!</h2>
-            <p className="lead text-warning"><AiOutlineWarning /> For Better Performance Settings Above Must Be Performed For Serious Reasons!!</p>
+            <h2 className="text-danger"><AiOutlineWarning /> Once you delete your Account all data will be lost!!</h2>
+            <p className="lead text-warning"><AiOutlineWarning /> Settings Must Be Performed For Serious Reasons!!</p>
+            <p className="lead text-primary"><AiOutlineWarning /> Settings can be performed at any time!!</p>
         </div>
     </div>
 

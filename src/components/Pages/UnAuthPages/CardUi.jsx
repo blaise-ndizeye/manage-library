@@ -1,23 +1,25 @@
 import React from 'react'
 import './Card.css'
-import { Link } from 'react-router-dom';
 
 const CardUi = (props) => {
-    return ( 
-        <div className="card text-center shadow">
+    const lending = 'Lend the book from the library to the student or teacher and make sure it is in secure hands'
+    const returning = 'Make sure that the books borrowed by the teacher or student from the library has been returned in time'
+    const managing = 'Manage all books in the library for both students and teachers'
+    return (
+        <div className="card text-center shadow bg-transparent">
             <div className="overflow">
-                <img src={props.imgSrc} alt="img 1" className="card-img-top" />
+                <img src={props.imgSrc} alt="img" className="card-img-top" />
             </div>
             <div className="card-body text-dark">
-                <h4 className="card-title">{ props.title }</h4>
+                <h4 className="card-title text-white">{props.title}</h4>
                 <p className="card-text text-secondary">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quas numquam odio iusto sunt sed saepe ea. Accusamus deserunt enim doloremque! Excepturi 
-                    pariatur modi natus ratione sapiente dolorum quas tempora soluta!
+                    {props.title === 'Returning Books' && returning}
+                    {props.title === 'Lending Books' && lending}
+                    {props.title === 'Managing Books' && managing}
                 </p>
-                <Link to="#" className="btn btn-outline-success">Go anywhere</Link>
             </div>
         </div>
-     );
+    );
 }
- 
+
 export default CardUi;

@@ -2,7 +2,7 @@ import React, { useEffect, memo, useState } from 'react'
 import { Table, Container } from 'reactstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { BsFillPersonLinesFill } from 'react-icons/bs'
+import { BsFillPeopleFill } from 'react-icons/bs'
 
 import ListItem from './ListItem'
 import Loader from '../../../pageEffect/loader'
@@ -50,12 +50,12 @@ const StudentList = (props) => {
     }
     return (
         <Container>
-            <h2 className="display-5"><BsFillPersonLinesFill /> Student's List</h2>
+            <h2 className="display-5 text-primary"><BsFillPeopleFill /> Student's List</h2>
             <div style={{ marginBottom: '20px' }}>
                 <InputForm setQ={setQ} q={q} />
             </div>
-            <Table responsive className="table-hover">
-                <thead color="dark">
+            <Table responsive className="table-hover table-dark">
+                <thead>
                     <tr>
                         <th>Index</th>
                         <th>First Name</th>

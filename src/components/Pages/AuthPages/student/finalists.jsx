@@ -2,7 +2,7 @@ import React, { useEffect, memo, useState } from 'react'
 import { Table, Container } from 'reactstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { BsFillPersonLinesFill } from 'react-icons/bs'
+import { BsFillPeopleFill } from 'react-icons/bs'
 
 import ListFinalist from './listFinalist'
 import Loader from '../../../pageEffect/loader'
@@ -54,11 +54,11 @@ const FinalistListComponent = (props) => {
     }
     return (
         <Container>
-            <h2 className="display-5"><BsFillPersonLinesFill />Finalists' List</h2>
+            <h2 className="display-5 text-primary"><BsFillPeopleFill /> Finalists' List</h2>
             <div style={{ marginBottom: '20px' }}>
                 <InputForm setQ={setQ} q={q} />
             </div>
-            <Table responsive className="table-hover">
+            <Table responsive className="table-hover table-dark">
                 <thead color="dark">
                     <tr>
                         <th>Index</th>

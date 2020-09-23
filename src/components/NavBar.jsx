@@ -34,7 +34,7 @@ class AppNavBar extends Component {
         const { isAunthenticated } = this.props.auth
         return (
             <div className="row">
-                <Navbar color="dark" dark expand="sm" className="mb-0.2 col-md-12 col-sm-12">
+                <Navbar color="dark" dark expand="sm" className="Navbar col-md-12 col-sm-12 bg-transparent">
                     <Container>
                         <NavLink className="nav-link" to={'/'}>ONLINE LIBRARY</NavLink>
                         <NavbarToggler onClick={this.toggle} />

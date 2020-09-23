@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Table, Container } from 'reactstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { BsFillPersonLinesFill } from 'react-icons/bs'
+import { BsFillPeopleFill } from 'react-icons/bs'
 
 import ListRecords from './listRecords'
 import Loader from '../../../pageEffect/loader'
@@ -51,11 +51,11 @@ const TeacherRecordsList = (props) => {
         return <Redirect to="/" />
     }
     return <Container>
-        <h2 className="display-5"><BsFillPersonLinesFill />Teachers' Records List</h2>
+        <h2 className="display-5 text-primary"><BsFillPeopleFill />Teachers' Records List</h2>
         <div style={{ marginBottom: '20px' }}>
             <InputForm setQ={setQ} q={q} />
         </div>
-        <Table responsive className="table-hover">
+        <Table responsive className="table-hover table-dark">
             <thead color="dark">
                 <tr>
                     <th>Index</th>

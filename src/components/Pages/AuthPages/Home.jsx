@@ -70,16 +70,16 @@ class Home extends Component {
                         <AddBook />
                     </Link></p>
                     <p><Link to="/book/list" role="button" color="dark">
-                        <Button outline className="m-15" color="light"><GoBook /> Book List</Button>
+                        <Button outline className="m-15" color="primary"><GoBook /> Book List</Button>
                     </Link></p><br />
                 </div>
                 <div className="bg2 col-md-5 col-sm-12">
                     <h2>{numOfStudentBorrowers} {numOfStudentBorrowers > 1 ? 'Student Borrowers' : 'Student Borrower'}</h2>
                     <p><Link to="/student/borrowers" role="button" color="dark">
-                        <Button outline className="m-15" color="light"><BsFillPeopleFill /> Student Borrowers List</Button>
+                        <Button outline className="m-15" color="primary"><BsFillPeopleFill /> Student Borrowers List</Button>
                     </Link></p>
                     <p><Link to="/student/borrowedBooks" role="button" color="dark">
-                        <Button outline className="m-15" color="light"><GoBook /> Student Borrowed Books List</Button>
+                        <Button outline className="m-15" color="primary"><GoBook /> Student Borrowed Books List</Button>
                     </Link></p><br />
                 </div>
                 <div className="bg1 col-md-4 col-sm-12">
@@ -94,19 +94,19 @@ class Home extends Component {
                 <div className="bg2 col-md-3 col-sm-12">
                     <h2>{numOfStudentRecords} {numOfStudentRecords > 1 ? 'Student records' : 'Student Record'}</h2>
                     <p><Link to="/student/records" role="button" color="dark">
-                        <Button outline className="m-15" color="light"><BsFillPersonLinesFill /> Student Records List</Button>
+                        <Button outline className="m-15" color="primary"><BsFillPersonLinesFill /> Student Records List</Button>
                     </Link></p><br />
                 </div>
                 <div className="bg2 col-md-3 col-sm-12">
                     <h2>{numOfTeacherRecords} {numOfTeacherRecords > 1 ? 'Teacher Records' : 'Teacher Record'}</h2>
                     <p><Link to="/teacher/records" role="button" color="dark">
-                        <Button outline className="m-15" color="light"><BsFillPersonLinesFill /> Teacher Records List</Button>
+                        <Button outline className="m-15" color="primary"><BsFillPersonLinesFill /> Teacher Records List</Button>
                     </Link></p><br />
                 </div>
                 <div className="bg2 col-md-3 col-sm-12">
                     <h2>{numOfFinalists} {numOfFinalists > 1 ? 'Finalist Borrowers' : 'Finalist Borrower'}</h2>
                     <p><Link to="/finalist/list" role="button" color="dark">
-                        <Button outline className="m-15" color="light"><BsFillPeopleFill /> Finalists Borrowers List</Button>
+                        <Button outline className="m-15" color="primary"><BsFillPeopleFill /> Finalists Borrowers List</Button>
                     </Link></p><br />
                 </div>
                 <div className="bg2 col-md-3 col-sm-12">

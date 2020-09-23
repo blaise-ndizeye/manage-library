@@ -7,7 +7,7 @@ import { Redirect } from 'react-router-dom'
 import Loader from '../../../pageEffect/loader'
 import { studentBorrowerList, studentBorrowerSearch } from '../../../actions/student/studentAction'
 import InputForm from './input'
-import { BsFillPersonLinesFill } from 'react-icons/bs'
+import { BsFillPeopleFill } from 'react-icons/bs'
 
 const StudentBorrowersList = (props) => {
 
@@ -52,12 +52,12 @@ const StudentBorrowersList = (props) => {
         return <Redirect to="/" />
     }
     return <Container>
-        <h2 className="display-5"><BsFillPersonLinesFill /> Students' Borrowers List</h2>
+        <h2 className="display-5 text-primary"><BsFillPeopleFill /> Students' Borrowers List</h2>
         <div style={{ marginBottom: '20px' }}>
             <InputForm setQ={setQ} q={q} />
         </div>
-        <Table responsive className="table-hover">
-            <thead color="dark">
+        <Table responsive className="table-hover table-dark">
+            <thead>
                 <tr>
                     <th>Index</th>
                     <th>First Name</th>
