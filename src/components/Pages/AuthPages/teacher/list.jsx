@@ -7,6 +7,7 @@ import Loader from '../../../pageEffect/loader'
 import { teacherSuccess, teacherListSearch } from '../../../actions/teacher/teacherAction'
 import InputForm from '../student/input'
 import { BsFillPeopleFill } from 'react-icons/bs'
+import { Pagination } from '../pagination'
 
 const TeacherList = (props) => {
 
@@ -15,7 +16,15 @@ const TeacherList = (props) => {
     const teachers = useSelector(state => state.teacher.teachers)
     const dispatch = useDispatch()
     const [q, setQ] = useState("")
+    const [currentPage, setCurrentPage] = useState(1)
+    const [teachersPerPage] = useState(5)
     const noTeacherFound = <h3 className="text-center text-danger display-4">No teachers found!!</h3>
+
+    const indexOfLastTeacher = currentPage * teachersPerPage
+    const indexOfFirstTeacher = indexOfLastTeacher - teachersPerPage
+    const currentTeachers = teachers.slice(indexOfFirstTeacher, indexOfLastTeacher)
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
     useEffect(() => {
         dispatch(teacherSuccess(auth.user._id))
@@ -29,7 +38,7 @@ const TeacherList = (props) => {
         }
     }, [q, dispatch, auth.user._id])
 
-    const singleTeacher = teachers.map((teacher, index) => {
+    const singleTeacher = currentTeachers.map((teacher, index) => {
         return <ListItem key={teacher._id}
             firstName={teacher.firstName}
             lastName={teacher.lastName}
@@ -70,6 +79,11 @@ const TeacherList = (props) => {
             </tbody>
         </Table>
         {!teachers.length && noTeacherFound}
+
+        {teachers.length > 5 && <Pagination
+            dataPerPage={teachersPerPage}
+            totalDatas={teachers.length}
+            paginate={paginate} />}
     </Container>
 }
 

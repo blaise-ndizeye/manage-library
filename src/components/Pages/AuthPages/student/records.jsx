@@ -8,10 +8,13 @@ import ListRecords from './listRecords'
 import Loader from '../../../pageEffect/loader'
 import InputForm from './input'
 import { studentRecordSearch, studentRecords } from '../../../actions/student/studentAction'
+import { Pagination } from '../pagination'
 
 class StudentRecordsList extends Component {
     state = {
-        q: ""
+        q: "",
+        currentPage: 1,
+        studentsPerPage: 5
     }
     componentDidMount() {
         const { auth, studentRecords } = this.props
@@ -31,8 +34,15 @@ class StudentRecordsList extends Component {
     render() {
 
         const { auth, isLoading, records } = this.props
+        const indexOfLastStudent = this.state.currentPage * this.state.studentsPerPage
+        const indexOfFirstStudent = indexOfLastStudent - this.state.studentsPerPage
+        const currentRecords = records.slice(indexOfFirstStudent, indexOfLastStudent)
+
+        const paginate = (pageNumber) => this.setState({ currentPage: pageNumber })
+
         const noStudentFound = <h3 className="text-center text-danger display-4">No Records found!!</h3>
-        const singleRecord = records.map((borrower, index) => {
+
+        const singleRecord = currentRecords.map((borrower, index) => {
             return <ListRecords key={index}
                 id={borrower.studentId}
                 firstName={borrower.firstName}
@@ -73,6 +83,11 @@ class StudentRecordsList extends Component {
                 </tbody>
             </Table>
             {!records.length && noStudentFound}
+
+            {records.length > 5 && <Pagination
+                dataPerPage={this.state.studentsPerPage}
+                totalDatas={records.length}
+                paginate={paginate} />}
         </Container>
     }
 }

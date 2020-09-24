@@ -7,10 +7,13 @@ import { connect } from 'react-redux'
 import { bookSuccess, searchBook } from '../../../actions/book/bookAction'
 import InputForm from '../student/input'
 import { GoBook } from 'react-icons/go'
+import { Pagination } from '../pagination'
 
 class BookList extends Component {
     state = {
-        q: ""
+        q: "",
+        currentPage: 1,
+        booksPerPage: 5
     }
     componentDidMount() {
         const { auth, bookSuccess } = this.props
@@ -31,7 +34,13 @@ class BookList extends Component {
     render() {
 
         const { auth, isLoading, books } = this.props
-        const singleBook = books.map((book, index) => {
+        const indexOfLastBook = this.state.currentPage * this.state.booksPerPage
+        const indexOfFirstBook = indexOfLastBook - this.state.booksPerPage
+        const currentBooks = books.slice(indexOfFirstBook, indexOfLastBook)
+
+        const paginate = (pageNumber) => this.setState({ currentPage: pageNumber })
+
+        const singleBook = currentBooks.map((book, index) => {
             return <ListItem key={book._id}
                 numOfBooks={book.numOfBooks}
                 typeOfBooks={book.typeOfBooks}
@@ -70,6 +79,11 @@ class BookList extends Component {
                 </tbody>
             </Table>
             {!books.length && noBooksFound}
+
+            {books.length > 5 && <Pagination
+                dataPerPage={this.state.booksPerPage}
+                totalDatas={books.length}
+                paginate={paginate} />}
         </Container>
     }
 }

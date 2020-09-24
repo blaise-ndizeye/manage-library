@@ -8,6 +8,7 @@ import ListItem from './ListItem'
 import Loader from '../../../pageEffect/loader'
 import { studentSuccess, studentListSearch } from '../../../actions/student/studentAction'
 import InputForm from './input'
+import { Pagination } from '../pagination'
 
 const StudentList = (props) => {
 
@@ -16,7 +17,15 @@ const StudentList = (props) => {
     const students = useSelector(state => state.student.students)
     const dispatch = useDispatch()
     const [q, setQ] = useState("")
+    const [currentPage, setCurrentPage] = useState(1)
+    const [studentsPerPage] = useState(5)
     const noStudentFound = <h3 className="text-center text-danger display-4">No Students found!!</h3>
+
+    const indexOfLastStudent = currentPage * studentsPerPage
+    const indexOfFirstStudent = indexOfLastStudent - studentsPerPage
+    const currentStudents = students.slice(indexOfFirstStudent, indexOfLastStudent)
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
     useEffect(() => {
         dispatch(studentSuccess(auth.user._id))
@@ -31,7 +40,7 @@ const StudentList = (props) => {
     }, [q, dispatch, auth.user._id])
 
 
-    const singleStudent = students.map((student, index) => <ListItem key={student._id}
+    const singleStudent = currentStudents.map((student, index) => <ListItem key={student._id}
         firstName={student.firstName}
         lastName={student.lastName}
         Class={student.Class}
@@ -74,6 +83,11 @@ const StudentList = (props) => {
 
             </Table>
             {!students.length && noStudentFound}
+
+            {students.length > 5 && <Pagination
+                dataPerPage={studentsPerPage}
+                totalDatas={students.length}
+                paginate={paginate} />}
 
         </Container>
     )

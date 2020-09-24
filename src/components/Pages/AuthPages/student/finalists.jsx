@@ -8,6 +8,7 @@ import ListFinalist from './listFinalist'
 import Loader from '../../../pageEffect/loader'
 import { finalistList, finalistsSearch } from '../../../actions/student/studentAction'
 import InputForm from './input'
+import { Pagination } from '../pagination'
 
 const FinalistListComponent = (props) => {
 
@@ -16,8 +17,15 @@ const FinalistListComponent = (props) => {
     const finalists = useSelector(state => state.student.finalists)
     const dispatch = useDispatch()
     const [q, setQ] = useState("")
+    const [currentPage, setCurrentPage] = useState(1)
+    const [studentsPerPage] = useState(5)
     const noStudentFound = <h3 className="text-center text-danger display-4">No Finalists found!!</h3>
 
+    const indexOfLastStudent = currentPage * studentsPerPage
+    const indexOfFirstStudent = indexOfLastStudent - studentsPerPage
+    const currentFinalists = finalists.slice(indexOfFirstStudent, indexOfLastStudent)
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber)
     useEffect(() => {
         dispatch(finalistList(auth.user._id))
     }, [isLoading, dispatch, auth.user._id])
@@ -31,7 +39,7 @@ const FinalistListComponent = (props) => {
     }, [q, dispatch, auth.user._id])
 
 
-    const singleFinalist = finalists.map((finalist, index) => <ListFinalist key={finalist._id}
+    const singleFinalist = currentFinalists.map((finalist, index) => <ListFinalist key={finalist._id}
         firstName={finalist.firstName}
         lastName={finalist.lastName}
         Class={finalist.Class}
@@ -82,6 +90,10 @@ const FinalistListComponent = (props) => {
             </Table>
             {!finalists.length && noStudentFound}
 
+            {finalists.length > 5 && <Pagination
+                dataPerPage={studentsPerPage}
+                totalDatas={finalists.length}
+                paginate={paginate} />}
         </Container>
     )
 }
