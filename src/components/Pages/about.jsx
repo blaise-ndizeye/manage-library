@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import Cards from './UnAuthPages/Cards'
 import Loader from '../pageEffect/loader'
+import { AboutCard } from './UnAuthPages/aboutCard'
 
 const About = (props) => {
     const { isAunthenticated, isLoading } = props
@@ -10,16 +11,21 @@ const About = (props) => {
         return <Loader />
     }
     else if (!isAunthenticated) {
-        return <Cards />
+        return <>
+            <div className="container">
+                <AboutCard />
+            </div>
+            <Cards />
+        </>
     }
     else {
-        return <Redirect to="/"/>
+        return <Redirect to="/" />
     }
-    
+
 }
 const mapStateToProps = state => ({
     isAunthenticated: state.auth.isAunthenticated,
     isLoading: state.auth.isLoading
 })
- 
+
 export default connect(mapStateToProps)(About);
