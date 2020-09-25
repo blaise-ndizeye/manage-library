@@ -33,7 +33,6 @@ Link {
 }
 
 .cont > div {
-    height: 100vh;
     background-size: cover;
     background-attachment: fixed;
     display: flex;
