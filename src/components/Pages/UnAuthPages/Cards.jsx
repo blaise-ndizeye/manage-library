@@ -6,7 +6,7 @@ import img3 from '../AuthPages/images/bg3.png'
 
 const Cards = () => {
     return (
-        <div className="container d-flex justify-content-center mx-auto my-auto">
+        <div className="container d-flex justify-content-center">
             <div className="row">
                 <div className="col-md-4 col-sm-12">
                     <CardUi imgSrc={img1} title="Lending Books" />
