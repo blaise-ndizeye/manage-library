@@ -15,6 +15,7 @@ import AddStudent from '../../student/AddStudent'
 import AddTeacher from '../../teacher/AddTeacher'
 import AddBook from '../../book/AddBook'
 import { AiFillCalendar } from 'react-icons/ai'
+import GuestPage from '../UnAuthPages/guestpage'
 
 
 moment.suppressDeprecationWarnings = true;
@@ -40,81 +41,88 @@ class Home extends Component {
         const curDate = new Date().toLocaleString()
         const { numOfTeachers, numOfTeacherRecords, numOfFinalists, numOfStudentRecords, numOfStudents, numOfBooks, numOfStudentBorrowers, numOfTeacherBorrowers, auth } = this.props
         const user = auth.user.name
-        return (
-            <div className="contain row">
-                <div className="bg2 col-md-4 col-sm-12">
-                    <h2><BsFillPersonCheckFill /> Welcome {user ? user.charAt(0).toUpperCase() + user.slice(1) : 'Loading...'}</h2>
-                    <p>to 'Library Management System'</p>
+
+        if (this.props.isAunthenticated !== null) {
+
+            return (
+                <div className="contain row">
+                    <div className="bg2 col-md-4 col-sm-12">
+                        <h2><BsFillPersonCheckFill /> Welcome {user ? user.charAt(0).toUpperCase() + user.slice(1) : 'Loading...'}</h2>
+                        <p>to 'Library Management System'</p>
+                    </div>
+                    <div className="bg1 col-md-4 col-sm-12">
+                        <h2> {numOfStudents} {numOfStudents > 1 ? 'Students' : 'Student'}</h2>
+                        <p><Link to="#" role="button" color="dark">
+                            <AddStudent />
+                        </Link></p>
+                        <p><Link to="/student/list" role="button" color="dark">
+                            <Button onClick={this.handleCheckLending} outline className="m-15" color="primary"><BsFillPeopleFill /> Student's List</Button>
+                        </Link></p><br />
+                    </div>
+                    <div className="bg1 col-md-4 col-sm-12">
+                        <h2>{numOfTeachers} {numOfTeachers > 1 ? 'Teachers' : 'Teacher'}</h2>
+                        <p><Link to="#" role="button" color="dark">
+                            <AddTeacher />
+                        </Link></p>
+                        <p><Link to="/teacher/list" role="button" color="dark">
+                            <Button outline className="m-15" color="primary"><BsFillPeopleFill /> Teacher's List</Button>
+                        </Link></p><br />
+                    </div>
+                    <div className="bg2 col-md-3 col-sm-12">
+                        <h2>{numOfBooks} {numOfBooks > 1 ? 'Books' : 'Book'}</h2>
+                        <p><Link to="#" role="button" color="dark">
+                            <AddBook />
+                        </Link></p>
+                        <p><Link to="/book/list" role="button" color="dark">
+                            <Button outline className="m-15" color="primary"><GoBook /> Book List</Button>
+                        </Link></p><br />
+                    </div>
+                    <div className="bg2 col-md-5 col-sm-12">
+                        <h2>{numOfStudentBorrowers} {numOfStudentBorrowers > 1 ? 'Student Borrowers' : 'Student Borrower'}</h2>
+                        <p><Link to="/student/borrowers" role="button" color="dark">
+                            <Button outline className="m-15" color="primary"><BsFillPeopleFill /> Student Borrowers List</Button>
+                        </Link></p>
+                        <p><Link to="/student/borrowedBooks" role="button" color="dark">
+                            <Button outline className="m-15" color="primary"><GoBook /> Student Borrowed Books List</Button>
+                        </Link></p><br />
+                    </div>
+                    <div className="bg1 col-md-4 col-sm-12">
+                        <h2>{numOfTeacherBorrowers} {numOfTeacherBorrowers > 1 ? 'Teacher Borrowers' : 'Teacher Borrower'}</h2>
+                        <p><Link to="/teacher/borrowers" role="button" color="dark">
+                            <Button outline className="m-15" color="primary"><BsFillPeopleFill /> Teacher Borrowers List</Button>
+                        </Link></p>
+                        <p><Link to="/teacher/borrowedBooks" role="button" color="dark">
+                            <Button outline className="m-15" color="primary"><GoBook /> Teacher Borrowed Book List</Button>
+                        </Link></p><br />
+                    </div>
+                    <div className="bg2 col-md-3 col-sm-12">
+                        <h2>{numOfStudentRecords} {numOfStudentRecords > 1 ? 'Student records' : 'Student Record'}</h2>
+                        <p><Link to="/student/records" role="button" color="dark">
+                            <Button outline className="m-15" color="primary"><BsFillPersonLinesFill /> Student Records List</Button>
+                        </Link></p><br />
+                    </div>
+                    <div className="bg2 col-md-3 col-sm-12">
+                        <h2>{numOfTeacherRecords} {numOfTeacherRecords > 1 ? 'Teacher Records' : 'Teacher Record'}</h2>
+                        <p><Link to="/teacher/records" role="button" color="dark">
+                            <Button outline className="m-15" color="primary"><BsFillPersonLinesFill /> Teacher Records List</Button>
+                        </Link></p><br />
+                    </div>
+                    <div className="bg2 col-md-3 col-sm-12">
+                        <h2>{numOfFinalists} {numOfFinalists > 1 ? 'Finalist Borrowers' : 'Finalist Borrower'}</h2>
+                        <p><Link to="/finalist/list" role="button" color="dark">
+                            <Button outline className="m-15" color="primary"><BsFillPeopleFill /> Finalists Borrowers List</Button>
+                        </Link></p><br />
+                    </div>
+                    <div className="bg2 col-md-3 col-sm-12">
+                        <p><AiFillCalendar /> {moment(curDate).format('LL')}</p>
+                        <h2><Clock /></h2>
+                    </div>
                 </div>
-                <div className="bg1 col-md-4 col-sm-12">
-                    <h2> {numOfStudents} {numOfStudents > 1 ? 'Students' : 'Student'}</h2>
-                    <p><Link to="#" role="button" color="dark">
-                        <AddStudent />
-                    </Link></p>
-                    <p><Link to="/student/list" role="button" color="dark">
-                        <Button onClick={this.handleCheckLending} outline className="m-15" color="primary"><BsFillPeopleFill /> Student's List</Button>
-                    </Link></p><br />
-                </div>
-                <div className="bg1 col-md-4 col-sm-12">
-                    <h2>{numOfTeachers} {numOfTeachers > 1 ? 'Teachers' : 'Teacher'}</h2>
-                    <p><Link to="#" role="button" color="dark">
-                        <AddTeacher />
-                    </Link></p>
-                    <p><Link to="/teacher/list" role="button" color="dark">
-                        <Button outline className="m-15" color="primary"><BsFillPeopleFill /> Teacher's List</Button>
-                    </Link></p><br />
-                </div>
-                <div className="bg2 col-md-3 col-sm-12">
-                    <h2>{numOfBooks} {numOfBooks > 1 ? 'Books' : 'Book'}</h2>
-                    <p><Link to="#" role="button" color="dark">
-                        <AddBook />
-                    </Link></p>
-                    <p><Link to="/book/list" role="button" color="dark">
-                        <Button outline className="m-15" color="primary"><GoBook /> Book List</Button>
-                    </Link></p><br />
-                </div>
-                <div className="bg2 col-md-5 col-sm-12">
-                    <h2>{numOfStudentBorrowers} {numOfStudentBorrowers > 1 ? 'Student Borrowers' : 'Student Borrower'}</h2>
-                    <p><Link to="/student/borrowers" role="button" color="dark">
-                        <Button outline className="m-15" color="primary"><BsFillPeopleFill /> Student Borrowers List</Button>
-                    </Link></p>
-                    <p><Link to="/student/borrowedBooks" role="button" color="dark">
-                        <Button outline className="m-15" color="primary"><GoBook /> Student Borrowed Books List</Button>
-                    </Link></p><br />
-                </div>
-                <div className="bg1 col-md-4 col-sm-12">
-                    <h2>{numOfTeacherBorrowers} {numOfTeacherBorrowers > 1 ? 'Teacher Borrowers' : 'Teacher Borrower'}</h2>
-                    <p><Link to="/teacher/borrowers" role="button" color="dark">
-                        <Button outline className="m-15" color="primary"><BsFillPeopleFill /> Teacher Borrowers List</Button>
-                    </Link></p>
-                    <p><Link to="/teacher/borrowedBooks" role="button" color="dark">
-                        <Button outline className="m-15" color="primary"><GoBook /> Teacher Borrowed Book List</Button>
-                    </Link></p><br />
-                </div>
-                <div className="bg2 col-md-3 col-sm-12">
-                    <h2>{numOfStudentRecords} {numOfStudentRecords > 1 ? 'Student records' : 'Student Record'}</h2>
-                    <p><Link to="/student/records" role="button" color="dark">
-                        <Button outline className="m-15" color="primary"><BsFillPersonLinesFill /> Student Records List</Button>
-                    </Link></p><br />
-                </div>
-                <div className="bg2 col-md-3 col-sm-12">
-                    <h2>{numOfTeacherRecords} {numOfTeacherRecords > 1 ? 'Teacher Records' : 'Teacher Record'}</h2>
-                    <p><Link to="/teacher/records" role="button" color="dark">
-                        <Button outline className="m-15" color="primary"><BsFillPersonLinesFill /> Teacher Records List</Button>
-                    </Link></p><br />
-                </div>
-                <div className="bg2 col-md-3 col-sm-12">
-                    <h2>{numOfFinalists} {numOfFinalists > 1 ? 'Finalist Borrowers' : 'Finalist Borrower'}</h2>
-                    <p><Link to="/finalist/list" role="button" color="dark">
-                        <Button outline className="m-15" color="primary"><BsFillPeopleFill /> Finalists Borrowers List</Button>
-                    </Link></p><br />
-                </div>
-                <div className="bg2 col-md-3 col-sm-12">
-                    <p><AiFillCalendar /> {moment(curDate).format('LL')}</p>
-                    <h2><Clock /></h2>
-                </div>
-            </div>
-        )
+            )
+        }
+        else {
+            return <GuestPage />
+        }
     }
 }
 

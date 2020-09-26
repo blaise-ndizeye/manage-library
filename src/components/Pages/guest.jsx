@@ -10,20 +10,20 @@ const GuestPage = (props) => {
         return <Loader />
     }
     else if (!isAunthenticated) {
-        return ( 
-           <Guest /> 
-     )
-    } 
+        return (
+            <Guest />
+        )
+    }
     else {
         return (
             <Home />
         )
     }
-    
+
 }
 const mapStateToProps = state => ({
     isAunthenticated: state.auth.isAunthenticated,
     isLoading: state.auth.isLoading
 })
- 
+
 export default connect(mapStateToProps)(GuestPage);
