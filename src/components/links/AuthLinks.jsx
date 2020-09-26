@@ -8,7 +8,7 @@ const AuthLinks = (props) => {
     return (
         <>
             <NavItem className="nav-item">
-                <NavLink className="nav-link" to="/">Home</NavLink>
+                <NavLink className="nav-link" to="/home">Home</NavLink>
             </NavItem>
             <NavItem>
                 <CheckPasswordModal />

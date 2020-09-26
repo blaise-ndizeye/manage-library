@@ -19,7 +19,7 @@ const About = (props) => {
         </>
     }
     else {
-        return <Redirect to="/" />
+        return <Redirect to="/home" />
     }
 
 }

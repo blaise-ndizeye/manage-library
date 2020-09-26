@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
 import { loadUser } from './components/actions/auth/authActions'
 import store from './store'
-import GuestPage from './components/Pages/guest'
 import NavBar from './components/NavBar'
 import About from './components/Pages/about'
 import StudentList from './components/Pages/AuthPages/student/list';
@@ -17,6 +16,8 @@ import studentRecordsList from './components/Pages/AuthPages/student/records'
 import FinalistListComponent from './components/Pages/AuthPages/student/finalists'
 import TeacherRecordsList from './components/Pages/AuthPages/teacher/records'
 import Settings from './components/Pages/AuthPages/auth';
+import Home from './components/Pages/AuthPages/Home';
+import GuestPage from './components/Pages/UnAuthPages/guestpage';
 
 class App extends Component {
 
@@ -43,6 +44,7 @@ class App extends Component {
             <Route path={'/teacher/records'} component={TeacherRecordsList}></Route>
             <Route path={'/user/settings'} component={Settings}></Route>
             <Route path={'/finalist/list'} component={FinalistListComponent}></Route>
+            <Route path={'/home'} component={Home}></Route>
           </Switch>
         </Router>
       </Fragment>

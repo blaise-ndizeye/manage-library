@@ -32,7 +32,7 @@ export const promoteNotify = () => {
 }
 
 export const loginNotify = () => {
-    toast(`Logged in to 'Online Library Management System'`)
+    toast(`Successfully logged in to Online Library Management System`)
 }
 
 export const returnNotify = () => {

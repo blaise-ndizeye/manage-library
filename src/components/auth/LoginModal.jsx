@@ -16,8 +16,7 @@ import { GoSignIn } from 'react-icons/go'
 
 import { login } from '../actions/auth/authActions'
 import { clearErrors } from '../actions/errorAction'
-import { NavLink } from 'react-router-dom'
-import { loginNotify } from '../notification'
+import { NavLink, withRouter } from 'react-router-dom'
 
 class LoginModal extends Component {
     state = {
@@ -35,9 +34,9 @@ class LoginModal extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { error, isAunthenticated } = this.props
-        if (error !== prevProps.error) {
+        const { error } = this.props
 
+        if (error !== prevProps.error) {
             if (error.id === 'LOGIN_FAIL') {
                 this.setState({
                     msg: error.msg.message
@@ -48,13 +47,6 @@ class LoginModal extends Component {
                     email: '',
                     password: ''
                 })
-            }
-        }
-
-        if (this.state.modal) {
-            if (isAunthenticated) {
-                loginNotify()
-                this.toggle()
             }
         }
     }
@@ -77,6 +69,10 @@ class LoginModal extends Component {
         const { email, password } = this.state
         const user = { email, password }
         this.props.login(user)
+        if (this.props.isAunthenticated) {
+            this.toggle()
+            this.props.history.push('/home')
+        }
     }
 
     render() {
@@ -124,4 +120,4 @@ const mapStateToProps = state => ({
     error: state.error
 })
 
-export default connect(mapStateToProps, { login, clearErrors })(LoginModal);
+export default connect(mapStateToProps, { login, clearErrors })(withRouter(LoginModal));
