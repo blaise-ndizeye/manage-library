@@ -24,6 +24,9 @@ class Home extends Component {
 
     async componentDidMount() {
         const { auth, teacherRecords, finalistList, studentSuccess, studentRecords, teacherBorrowedBookList, teacherSuccess, bookSuccess, studentBorrowerList, studentBorrowedBookList, teacherBorrowerList } = this.props
+        if (!auth.isAunthenticated) {
+            await this.props.history.push('/')
+        }
         await studentSuccess(auth.user._id)
         await teacherSuccess(auth.user._id)
         await bookSuccess(auth.user._id)
@@ -45,9 +48,6 @@ class Home extends Component {
 
         if (auth.isLoading) {
             return <Loader />
-        }
-        else if (!auth.isAunthenticated) {
-            this.props.history.push('/')
         }
 
         return <div className="contain row">
