@@ -80,7 +80,6 @@ const StudentList = (props) => {
                 </thead>
 
                 {students.length > 0 && singleStudent}
-
             </Table>
             {!students.length && noStudentFound}
 
