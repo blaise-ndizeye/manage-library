@@ -7,7 +7,6 @@ import Loader from '../../../pageEffect/loader'
 import { teacherBorrowerList, teacherBorrowerSearch } from '../../../actions/teacher/teacherAction'
 import InputForm from '../student/input'
 import { BsFillPeopleFill } from 'react-icons/bs'
-import { Pagination } from '../pagination'
 
 const StudentBorrowersList = (props) => {
 
@@ -16,15 +15,7 @@ const StudentBorrowersList = (props) => {
     const borrowers = useSelector(state => state.teacher.borrowers)
     const dispatch = useDispatch()
     const [q, setQ] = useState("")
-    const [currentPage, setCurrentPage] = useState(1)
-    const [teachersPerPage] = useState(5)
     const noTeacherFound = <h3 className="text-center text-danger display-4">No Borrowers found!!</h3>
-
-    const indexOfLastTeacher = currentPage * teachersPerPage
-    const indexOfFirstTeacher = indexOfLastTeacher - teachersPerPage
-    const currentBorrowers = borrowers.slice(indexOfFirstTeacher, indexOfLastTeacher)
-
-    const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
     useEffect(() => {
         dispatch(teacherBorrowerList(auth.user._id))
@@ -38,7 +29,7 @@ const StudentBorrowersList = (props) => {
         }
     }, [q, dispatch, auth.user._id])
 
-    const singleBorrower = currentBorrowers.map((borrower, index) => {
+    const singleBorrower = borrowers.map((borrower, index) => {
         return <ListBorrowers key={index}
             id={borrower.teacherId}
             firstName={borrower.firstName}
@@ -80,10 +71,6 @@ const StudentBorrowersList = (props) => {
             </tbody>
         </Table>
         {!borrowers.length && noTeacherFound}
-        {borrowers.length > 5 && <Pagination
-            dataPerPage={teachersPerPage}
-            totalDatas={borrowers.length}
-            paginate={paginate} />}
     </Container>
 }
 

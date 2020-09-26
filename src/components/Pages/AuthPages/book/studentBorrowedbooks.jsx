@@ -7,7 +7,6 @@ import Loader from '../../../pageEffect/loader'
 import { studentBorrowedBookSearch, studentBorrowedBookList } from '../../../actions/student/studentAction'
 import InputForm from '../student/input'
 import { GoBook } from 'react-icons/go'
-import { Pagination } from '../pagination'
 
 const StudentBorrowedBooks = (props) => {
 
@@ -16,17 +15,9 @@ const StudentBorrowedBooks = (props) => {
     const borrowedBooks = useSelector(state => state.student.borrowedBooks)
     const [q, setQ] = useState("")
     const dispatch = useDispatch()
-    const [currentPage, setCurrentPage] = useState(1)
-    const [booksPerPage] = useState(5)
     const noBookFound = <h3 className="text-center text-danger display-4">No Borrowed Books found!!</h3>
 
-    const indexOfLastBook = currentPage * booksPerPage
-    const indexOfFirstBook = indexOfLastBook - booksPerPage
-    const currentBooks = borrowedBooks.slice(indexOfFirstBook, indexOfLastBook)
-
-    const paginate = (pageNumber) => setCurrentPage(pageNumber)
-
-    const singleBorrowedBook = currentBooks.map((borrowedBook, index) => {
+    const singleBorrowedBook = borrowedBooks.map((borrowedBook, index) => {
         return <ListBorowedBooks key={index}
             id={borrowedBook._id}
             date={borrowedBook.dateBorrowed}
@@ -72,10 +63,6 @@ const StudentBorrowedBooks = (props) => {
         </Table>
         {!borrowedBooks.length && noBookFound}
 
-        {borrowedBooks.length > 5 && <Pagination
-            dataPerPage={booksPerPage}
-            totalDatas={borrowedBooks.length}
-            paginate={paginate} />}
     </Container>
 }
 

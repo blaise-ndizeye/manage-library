@@ -8,7 +8,6 @@ import ListRecords from './listRecords'
 import Loader from '../../../pageEffect/loader'
 import { teacherRecords, teacherRecordSearch } from '../../../actions/teacher/teacherAction'
 import InputForm from '../student/input'
-import { Pagination } from '../pagination'
 
 const TeacherRecordsList = (props) => {
 
@@ -17,15 +16,7 @@ const TeacherRecordsList = (props) => {
     const records = useSelector(state => state.teacher.records)
     const dispatch = useDispatch()
     const [q, setQ] = useState("")
-    const [currentPage, setCurrentPage] = useState(1)
-    const [teachersPerPage] = useState(5)
     const noTeacherFound = <h3 className="text-center text-danger display-4">No Records Found!!</h3>
-
-    const indexOfLastTeacher = currentPage * teachersPerPage
-    const indexOfFirstTeacher = indexOfLastTeacher - teachersPerPage
-    const currentRecords = records.slice(indexOfFirstTeacher, indexOfLastTeacher)
-
-    const paginate = (pageNumber) => setCurrentPage(pageNumber)
 
     useEffect(() => {
         dispatch(teacherRecords(auth.user._id))
@@ -39,7 +30,7 @@ const TeacherRecordsList = (props) => {
         }
     }, [q, dispatch, auth.user._id])
 
-    const singleRecord = currentRecords.map((record, index) => {
+    const singleRecord = records.map((record, index) => {
         return <ListRecords key={index}
             id={record.teacherId}
             firstName={record.firstName}
@@ -80,11 +71,6 @@ const TeacherRecordsList = (props) => {
             </tbody>
         </Table>
         {!records.length && noTeacherFound}
-
-        {records.length > 5 && <Pagination
-            dataPerPage={teachersPerPage}
-            totalDatas={records.length}
-            paginate={paginate} />}
     </Container>
 }
 
