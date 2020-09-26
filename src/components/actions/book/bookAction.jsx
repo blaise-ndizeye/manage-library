@@ -8,6 +8,7 @@ import {
 } from '../actionTypes'
 import { returnErrors } from '../errorAction'
 import { tokenConfig } from '../auth/authActions'
+import rootURL from '../rootURL'
 
 export const deleteSuccess = () => ({
     type: DELETE_SUCCESS
@@ -49,7 +50,7 @@ export const bookUpdateSuccess = data => ({
 
 export const bookSuccess = userId => async (dispatch) => {
     try {
-        const response = await axios.get(`/api/book/${userId}`)
+        const response = await axios.get(`${rootURL}/api/book/${userId}`)
         await dispatch(bookList(response.data))
 
     } catch (err) {
@@ -61,7 +62,7 @@ export const bookSuccess = userId => async (dispatch) => {
 export const addBook = ({ userId, numOfBooks, typeOfBooks }) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ numOfBooks, typeOfBooks })
-        const response = await axios.post(`/api/book/${userId}`, body, tokenConfig(getState))
+        const response = await axios.post(`${rootURL}/api/book/${userId}`, body, tokenConfig(getState))
         await dispatch(bookLoading())
         await dispatch(bookAddSuccess(response.data))
     } catch (err) {
@@ -73,7 +74,7 @@ export const addBook = ({ userId, numOfBooks, typeOfBooks }) => async (dispatch,
 export const deleteBook = ({ userId, bookId }) => async (dispatch, getState) => {
     try {
         await dispatch(bookLoading())
-        const response = await axios.delete(`/api/book/${userId}/${bookId}`, tokenConfig(getState))
+        const response = await axios.delete(`${rootURL}/api/book/${userId}/${bookId}`, tokenConfig(getState))
         response.data.success ? await dispatch(bookDeleteSuccess(bookId)) : dispatch(bookError())
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status))
@@ -85,7 +86,7 @@ export const deleteBook = ({ userId, bookId }) => async (dispatch, getState) => 
 export const editBook = ({ userId, bookId, numOfBooks, typeOfBooks }) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ numOfBooks, typeOfBooks })
-        const response = await axios.patch(`/api/book/${userId}/${bookId}`, body, tokenConfig(getState))
+        const response = await axios.patch(`${rootURL}/api/book/${userId}/${bookId}`, body, tokenConfig(getState))
         await dispatch(bookLoading())
         await dispatch(bookDeleteSuccess(bookId))
         await dispatch(bookUpdateSuccess(response.data))
@@ -97,7 +98,7 @@ export const editBook = ({ userId, bookId, numOfBooks, typeOfBooks }) => async (
 
 export const deleteAllBooks = userId => async (dispatch, getState) => {
     try {
-        await axios.delete(`/api/bookSettings/deleteAllBooks/${userId}`, tokenConfig(getState))
+        await axios.delete(`${rootURL}/api/bookSettings/deleteAllBooks/${userId}`, tokenConfig(getState))
         await dispatch({ type: DELETE_ALL_BOOKS })
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status))

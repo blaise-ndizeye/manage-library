@@ -39,6 +39,12 @@ class Home extends Component {
         await finalistList(auth.user._id)
     }
 
+    componentDidUpdate() {
+        if (!this.props.auth.isAunthenticated) {
+            this.props.history.push('/')
+        }
+    }
+
 
     render() {
 

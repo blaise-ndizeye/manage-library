@@ -25,6 +25,7 @@ import {
 } from '../actionTypes'
 import { returnErrors } from '../errorAction'
 import { tokenConfig } from '../auth/authActions'
+import rootURL from '../rootURL'
 
 export const deleteSuccess = () => ({
     type: DELETE_SUCCESS
@@ -109,7 +110,7 @@ export const deleteStudentBorrower = () => ({
 
 export const studentSuccess = userId => async (dispatch) => {
     try {
-        const response = await axios.get(`/api/student/${userId}`)
+        const response = await axios.get(`${rootURL}/api/student/${userId}`)
         await dispatch(studentList(response.data))
 
     } catch (err) {
@@ -122,7 +123,7 @@ export const studentSuccess = userId => async (dispatch) => {
 export const addStudent = ({ userId, firstName, lastName, Class, gender, age }) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ firstName, lastName, Class, gender, age })
-        const response = await axios.post(`/api/student/${userId}`, body, tokenConfig(getState))
+        const response = await axios.post(`${rootURL}/api/student/${userId}`, body, tokenConfig(getState))
         await dispatch(studentLoading())
         await dispatch(studentAddSuccess(response.data))
     } catch (err) {
@@ -133,7 +134,7 @@ export const addStudent = ({ userId, firstName, lastName, Class, gender, age }) 
 
 export const deleteStudent = ({ userId, studentId }) => async (dispatch, getState) => {
     try {
-        const response = await axios.delete(`/api/student/${userId}/${studentId}`, tokenConfig(getState))
+        const response = await axios.delete(`${rootURL}/api/student/${userId}/${studentId}`, tokenConfig(getState))
         await dispatch(studentLoading())
         response.data.success ? await dispatch(studentDeleteSuccess(studentId)) : dispatch(studentError())
     } catch (err) {
@@ -146,7 +147,7 @@ export const deleteStudent = ({ userId, studentId }) => async (dispatch, getStat
 export const editStudent = ({ userId, studentId, firstName, lastName, Class, gender, age }) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ firstName, lastName, Class, gender, age })
-        const response = await axios.patch(`/api/student/${userId}/${studentId}`, body, tokenConfig(getState))
+        const response = await axios.patch(`${rootURL}/api/student/${userId}/${studentId}`, body, tokenConfig(getState))
         await dispatch(studentLoading())
         await dispatch(studentDeleteSuccess(studentId))
         await dispatch(studentUpdateSuccess(response.data))
@@ -159,7 +160,7 @@ export const editStudent = ({ userId, studentId, firstName, lastName, Class, gen
 export const lendStudent = ({ userId, borrowerId, bookType, bookName, bookId, $bookId, $bookType, $bookName }) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ bookId, bookType, bookName, $bookId, $bookName, $bookType })
-        const response = await axios.post(`/api/student/lend/${userId}/${borrowerId}`, body, tokenConfig(getState))
+        const response = await axios.post(`${rootURL}/api/student/lend/${userId}/${borrowerId}`, body, tokenConfig(getState))
         await dispatch(studentLoading())
         await dispatch(studentLending(response.data))
     } catch (err) {
@@ -170,7 +171,7 @@ export const lendStudent = ({ userId, borrowerId, bookType, bookName, bookId, $b
 
 export const studentBorrowerList = userId => async (dispatch, getState) => {
     try {
-        const response = await axios.get(`/api/student/borrower/${userId}`)
+        const response = await axios.get(`${rootURL}/api/student/borrower/${userId}`)
         await dispatch(studentBorrowers(response.data))
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status))
@@ -180,7 +181,7 @@ export const studentBorrowerList = userId => async (dispatch, getState) => {
 
 export const studentBorrowedBookList = userId => async (dispatch, getState) => {
     try {
-        const response = await axios.get(`/api/student/borrowedBook/${userId}`)
+        const response = await axios.get(`${rootURL}/api/student/borrowedBook/${userId}`)
         await dispatch(studentBorrowedBooks(response.data))
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status))
@@ -191,7 +192,7 @@ export const studentBorrowedBookList = userId => async (dispatch, getState) => {
 export const studentReturnSuccess = ({ userId, studentId, bookType, bookId, bookName }) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ bookId, bookType, bookName })
-        const response = await axios.post(`/api/student/record/${userId}/${studentId}`, body, tokenConfig(getState))
+        const response = await axios.post(`${rootURL}/api/student/record/${userId}/${studentId}`, body, tokenConfig(getState))
         await dispatch(studentLoading())
         await dispatch(studentReturn(response.data))
     } catch (err) {
@@ -204,7 +205,7 @@ export const studentReturnSuccess = ({ userId, studentId, bookType, bookId, book
 export const deleteBorrowers = ({ userId, studentId, bookId, bookName, bookType }) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ bookId, bookType, bookName })
-        await axios.post(`/api/student/borrower/${userId}/${studentId}`, body, tokenConfig(getState))
+        await axios.post(`${rootURL}/api/student/borrower/${userId}/${studentId}`, body, tokenConfig(getState))
         await dispatch(deleteStudentBorrower())
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status, 'STUDENT_DELETE_BORROWER_FAIL'))
@@ -214,7 +215,7 @@ export const deleteBorrowers = ({ userId, studentId, bookId, bookName, bookType 
 
 export const studentRecords = userId => async (dispatch, getState) => {
     try {
-        const response = await axios.post(`/api/student/record/${userId}`)
+        const response = await axios.post(`${rootURL}/api/student/record/${userId}`)
         await dispatch(studentRecordList(response.data))
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status))
@@ -224,7 +225,7 @@ export const studentRecords = userId => async (dispatch, getState) => {
 
 export const deleteAllStudents = userId => async (dispatch, getState) => {
     try {
-        await axios.delete(`/api/studentSettings/deleteAllStudents/${userId}`, tokenConfig(getState))
+        await axios.delete(`${rootURL}/api/studentSettings/deleteAllStudents/${userId}`, tokenConfig(getState))
         await dispatch({ type: DELETE_ALL_STUDENTS })
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status))
@@ -234,7 +235,7 @@ export const deleteAllStudents = userId => async (dispatch, getState) => {
 
 export const deleteAllBorrowers = userId => async (dispatch, getState) => {
     try {
-        const response = await axios.delete(`/api/studentSettings/deleteAllBorrowers/${userId}`, tokenConfig(getState))
+        const response = await axios.delete(`${rootURL}/api/studentSettings/deleteAllBorrowers/${userId}`, tokenConfig(getState))
         console.log(response)
         await dispatch({ type: DELETE_ALL_STUDENT_BORROWERS })
     } catch (err) {
@@ -245,7 +246,7 @@ export const deleteAllBorrowers = userId => async (dispatch, getState) => {
 
 export const deleteAllRecords = userId => async (dispatch, getState) => {
     try {
-        await axios.delete(`/api/studentSettings/deleteAllRecords/${userId}`, tokenConfig(getState))
+        await axios.delete(`${rootURL}/api/studentSettings/deleteAllRecords/${userId}`, tokenConfig(getState))
         await dispatch({ type: DELETE_ALL_STUDENT_RECORDS })
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status))
@@ -255,7 +256,7 @@ export const deleteAllRecords = userId => async (dispatch, getState) => {
 
 export const promoteStudents = userId => async (dispatch, getState) => {
     try {
-        await axios.post(`/api/studentSettings/promoteStudents/${userId}`, {}, tokenConfig(getState))
+        await axios.post(`${rootURL}/api/studentSettings/promoteStudents/${userId}`, {}, tokenConfig(getState))
         await dispatch({ type: PROMOTE_STUDENTS })
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status))
@@ -265,7 +266,7 @@ export const promoteStudents = userId => async (dispatch, getState) => {
 
 export const returnForFinalists = ({ userId, studentId }) => async (dispatch, getState) => {
     try {
-        await axios.post(`/api/studentSettings/returnForFinalist/${userId}/${studentId}`, {}, tokenConfig(getState))
+        await axios.post(`${rootURL}/api/studentSettings/returnForFinalist/${userId}/${studentId}`, {}, tokenConfig(getState))
         await dispatch(studentLoading())
         await dispatch({ type: RETURN_FOR_FINALIST })
     } catch (err) {
@@ -276,7 +277,7 @@ export const returnForFinalists = ({ userId, studentId }) => async (dispatch, ge
 
 export const finalistList = userId => async (dispatch, getState) => {
     try {
-        const response = await axios.get(`/api/studentSettings/allFinalists/${userId}`)
+        const response = await axios.get(`${rootURL}/api/studentSettings/allFinalists/${userId}`)
         await dispatch({
             type: FINALIST_LIST,
             payload: response.data
@@ -289,7 +290,7 @@ export const finalistList = userId => async (dispatch, getState) => {
 
 export const deleteAllFinalists = userId => async (dispatch, getState) => {
     try {
-        await axios.get(`/api/studentSettings/deleteAllFinalists/${userId}`, tokenConfig(getState))
+        await axios.get(`${rootURL}/api/studentSettings/deleteAllFinalists/${userId}`, tokenConfig(getState))
         await dispatch({ type: DELETE_ALL_FINALISTS })
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status))
@@ -299,7 +300,7 @@ export const deleteAllFinalists = userId => async (dispatch, getState) => {
 
 export const deleteFinalist = ({ userId, studentId }) => async (dispatch, getState) => {
     try {
-        await axios.delete(`/api/studentSettings/deleteFinalist/${userId}/${studentId}`, tokenConfig(getState))
+        await axios.delete(`${rootURL}/api/studentSettings/deleteFinalist/${userId}/${studentId}`, tokenConfig(getState))
         await dispatch(studentLoading())
         await dispatch({ type: DELETE_FINALIST })
     } catch (err) {

@@ -19,6 +19,7 @@ import {
 } from '../actionTypes'
 import { returnErrors } from '../errorAction'
 import { tokenConfig } from '../auth/authActions'
+import rootURL from '../rootURL'
 
 export const deleteSuccess = () => ({
     type: DELETE_SUCCESS
@@ -100,7 +101,7 @@ export const teacherRecordSearch = data => ({
 
 export const teacherSuccess = userId => async (dispatch) => {
     try {
-        const response = await axios.get(`/api/teacher/${userId}`)
+        const response = await axios.get(`${rootURL}/api/teacher/${userId}`)
         await dispatch(teacherList(response.data))
 
     } catch (err) {
@@ -112,7 +113,7 @@ export const teacherSuccess = userId => async (dispatch) => {
 export const addTeacher = ({ userId, firstName, lastName, gender, phone }) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ firstName, lastName, phone, gender })
-        const response = await axios.post(`/api/teacher/${userId}`, body, tokenConfig(getState))
+        const response = await axios.post(`${rootURL}/api/teacher/${userId}`, body, tokenConfig(getState))
         await dispatch(teacherLoading())
         await dispatch(teacherAddSuccess(response.data))
     } catch (err) {
@@ -123,7 +124,7 @@ export const addTeacher = ({ userId, firstName, lastName, gender, phone }) => as
 
 export const deleteTeacher = ({ userId, teacherId }) => async (dispatch, getState) => {
     try {
-        const response = await axios.delete(`/api/teacher/${userId}/${teacherId}`, tokenConfig(getState))
+        const response = await axios.delete(`${rootURL}/api/teacher/${userId}/${teacherId}`, tokenConfig(getState))
         await dispatch(teacherLoading())
         response.data.success ? await dispatch(teacherDeleteSuccess(teacherId)) : dispatch(teacherError())
     } catch (err) {
@@ -136,7 +137,7 @@ export const deleteTeacher = ({ userId, teacherId }) => async (dispatch, getStat
 export const editTeacher = ({ userId, teacherId, firstName, lastName, gender, phone }) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ firstName, lastName, gender, phone })
-        const response = await axios.patch(`/api/teacher/${userId}/${teacherId}`, body, tokenConfig(getState))
+        const response = await axios.patch(`${rootURL}/api/teacher/${userId}/${teacherId}`, body, tokenConfig(getState))
         await dispatch(teacherLoading())
         await dispatch(teacherDeleteSuccess(teacherId))
         await dispatch(teacherUpdateSuccess(response.data))
@@ -148,7 +149,7 @@ export const editTeacher = ({ userId, teacherId, firstName, lastName, gender, ph
 
 export const teacherBorrowerList = userId => async (dispatch, getState) => {
     try {
-        const response = await axios.get(`/api/teacher/borrowers/${userId}`)
+        const response = await axios.get(`${rootURL}/api/teacher/borrowers/${userId}`)
         await dispatch(teacherBorrowers(response.data))
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status))
@@ -158,7 +159,7 @@ export const teacherBorrowerList = userId => async (dispatch, getState) => {
 
 export const teacherBorrowedBookList = userId => async (dispatch, getState) => {
     try {
-        const response = await axios.get(`/api/teacher/borrowedBooks/${userId}`)
+        const response = await axios.get(`${rootURL}/api/teacher/borrowedBooks/${userId}`)
         await dispatch(teacherBorrowedBooks(response.data))
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status))
@@ -169,7 +170,7 @@ export const teacherBorrowedBookList = userId => async (dispatch, getState) => {
 export const lendTeacher = ({ userId, teacherId, numOfBooks, bookType, bookName }) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ bookType, numOfBooks, bookName })
-        await axios.post(`/api/teacher/lend/${userId}/${teacherId}`, body, tokenConfig(getState))
+        await axios.post(`${rootURL}/api/teacher/lend/${userId}/${teacherId}`, body, tokenConfig(getState))
         await dispatch(teacherLoading())
         await dispatch(teacherLending())
     } catch (err) {
@@ -179,7 +180,7 @@ export const lendTeacher = ({ userId, teacherId, numOfBooks, bookType, bookName 
 }
 export const teacherRecords = userId => async (dispatch, getState) => {
     try {
-        const response = await axios.post(`/api/teacher/record/${userId}`)
+        const response = await axios.post(`${rootURL}/api/teacher/record/${userId}`)
         await dispatch(teacherRecordSuccess(response.data))
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status))
@@ -190,7 +191,7 @@ export const teacherRecords = userId => async (dispatch, getState) => {
 export const deleteBorrowers = ({ userId, teacherId, bookType, bookName }) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ bookType, bookName })
-        await axios.post(`/api/teacher/borrower/${userId}/${teacherId}`, body, tokenConfig(getState))
+        await axios.post(`${rootURL}/api/teacher/borrower/${userId}/${teacherId}`, body, tokenConfig(getState))
         await dispatch(teacherLoading())
         await dispatch(deleteTeacherBorrower())
     } catch (err) {
@@ -202,7 +203,7 @@ export const deleteBorrowers = ({ userId, teacherId, bookType, bookName }) => as
 export const teacherReturnSuccess = ({ userId, teacherId, bookType, bookName, numOfBooks }) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ bookName, bookType, numOfBooks })
-        await axios.post(`/api/teacher/record/${userId}/${teacherId}`, body, tokenConfig(getState))
+        await axios.post(`${rootURL}/api/teacher/record/${userId}/${teacherId}`, body, tokenConfig(getState))
         await dispatch(teacherLoading())
         await dispatch(teacherReturn())
     } catch (err) {
@@ -213,7 +214,7 @@ export const teacherReturnSuccess = ({ userId, teacherId, bookType, bookName, nu
 
 export const deleteAllTeachers = userId => async (dispatch, getState) => {
     try {
-        await axios.delete(`/api/teacherSettings/deleteAllTeachers/${userId}`, tokenConfig(getState))
+        await axios.delete(`${rootURL}/api/teacherSettings/deleteAllTeachers/${userId}`, tokenConfig(getState))
         await dispatch({ type: DELETE_ALL_TEACHERS })
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status))
@@ -223,7 +224,7 @@ export const deleteAllTeachers = userId => async (dispatch, getState) => {
 
 export const deleteAllBorrowers = userId => async (dispatch, getState) => {
     try {
-        await axios.delete(`/api/teacherSettings/deleteAllBorrowers/${userId}`, tokenConfig(getState))
+        await axios.delete(`${rootURL}/api/teacherSettings/deleteAllBorrowers/${userId}`, tokenConfig(getState))
         await dispatch({ type: DELETE_ALL_TEACHER_BORROWERS })
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status))
@@ -233,7 +234,7 @@ export const deleteAllBorrowers = userId => async (dispatch, getState) => {
 
 export const deleteAllRecords = userId => async (dispatch, getState) => {
     try {
-        await axios.delete(`/api/teacherSettings/deleteAllRecords/${userId}`, tokenConfig(getState))
+        await axios.delete(`${rootURL}/api/teacherSettings/deleteAllRecords/${userId}`, tokenConfig(getState))
         await dispatch({ type: DELETE_ALL_TEACHER_RECORDS })
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status))

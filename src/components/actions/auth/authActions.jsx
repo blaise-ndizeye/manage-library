@@ -10,6 +10,7 @@ import {
     DELETE_ACCOUNT_FAIL
 } from '../actionTypes'
 import { returnErrors } from '../errorAction'
+import rootURL from '../rootURL'
 
 //check token and load user
 export const loadUser = () => async (dispatch, getState) => {
@@ -17,7 +18,7 @@ export const loadUser = () => async (dispatch, getState) => {
         //user loading
         await dispatch({ type: USER_LOADING })
 
-        const response = await axios.get('/api/user', tokenConfig(getState))
+        const response = await axios.get(`${rootURL}/api/user`, tokenConfig(getState))
 
         await dispatch({ type: USER_LOADED, payload: response.data })
     } catch (err) {
@@ -39,7 +40,7 @@ export const register = ({ name, email, password, password1 }) => async (dispatc
 
         const body = JSON.stringify({ name, email, password, password1 })
 
-        await axios.post('/api/user/register', body, config)
+        await axios.post(`${rootURL}/api/user/register`, body, config)
 
         await dispatch({
             type: REGISTER_SUCCESS,
@@ -81,7 +82,7 @@ export const login = ({ email, password }) => async (dispatch) => {
             }
         }
         const body = JSON.stringify({ email, password })
-        const response = await axios.post('/api/user/login', body, config)
+        const response = await axios.post(`${rootURL}/api/user/login`, body, config)
 
         await dispatch({
             type: LOGIN_SUCCESS,
@@ -108,7 +109,7 @@ export const clearConfirmation = () => ({
 export const checkPassword = ({ userId, email, password }) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ email, password })
-        await axios.post(`/api/user/checkPassword/${userId}`, body, tokenConfig(getState))
+        await axios.post(`${rootURL}/api/user/checkPassword/${userId}`, body, tokenConfig(getState))
         await dispatch({ type: CHECK_PASSWORD })
     } catch (err) {
         dispatch(returnErrors(err.response.data, err.response.status, 'CHECK_PASSWORD_FAIL'))
@@ -119,7 +120,7 @@ export const checkPassword = ({ userId, email, password }) => async (dispatch, g
 export const changePassword = ({ userId, password }) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ password })
-        const response = await axios.patch(`/api/user/changePassword/${userId}`, body, tokenConfig(getState))
+        const response = await axios.patch(`${rootURL}/api/user/changePassword/${userId}`, body, tokenConfig(getState))
         await dispatch({
             type: CHANGE_PASSWORD,
             payload: response.data
@@ -133,7 +134,7 @@ export const changePassword = ({ userId, password }) => async (dispatch, getStat
 export const changeEmailOrUsername = ({ userId, username, email }) => async (dispatch, getState) => {
     try {
         const body = JSON.stringify({ username, email })
-        const response = await axios.patch(`/api/user/changeEmailOrUsername/${userId}`, body, tokenConfig(getState))
+        const response = await axios.patch(`${rootURL}/api/user/changeEmailOrUsername/${userId}`, body, tokenConfig(getState))
         await dispatch({
             type: CHANGE_EMAILORUSERNAME,
             payload: response.data
@@ -146,7 +147,7 @@ export const changeEmailOrUsername = ({ userId, username, email }) => async (dis
 
 export const deleteAccount = userId => async (dispatch, getState) => {
     try {
-        await axios.delete(`/api/user/deleteAccount/${userId}`, tokenConfig(getState))
+        await axios.delete(`${rootURL}/api/user/deleteAccount/${userId}`, tokenConfig(getState))
         await dispatch({ type: DELETE_ACCOUNT })
         await dispatch(logout())
     } catch (err) {
