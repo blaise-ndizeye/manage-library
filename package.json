@@ -47,5 +47,5 @@
     "babel-jest": "^24.9.0",
     "redux-devtools-extension": "^2.13.8"
   },
-  "proxy": "http://localhost:5000"
+  "proxy": "https://quiet-river-33450.herokuapp.com"
 }
