@@ -1,3 +1,3 @@
-const root = 'http://localhost:5000'
+const root = 'https://quiet-river-33450.herokuapp.com'
 
 export default root 
