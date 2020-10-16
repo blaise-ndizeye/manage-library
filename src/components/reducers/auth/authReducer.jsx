@@ -23,7 +23,7 @@ const initialState = {
     token: localStorage.getItem('token'),
     isAunthenticated: null,
     isLoading: false,
-    user: {},
+    user: JSON.parse(localStorage.getItem('user')),
     success: null,
     checkPassword: false,
     userMsg: null
@@ -38,6 +38,7 @@ export default function (state = initialState, action) {
                 userMsg: null
             }
         case USER_LOADED:
+            localStorage.setItem('user', JSON.stringify(action.payload))
             return {
                 ...state,
                 isAunthenticated: true,
@@ -64,6 +65,7 @@ export default function (state = initialState, action) {
         case REGISTER_FAIL:
         case DELETE_ACCOUNT:
             localStorage.removeItem('token')
+            localStorage.clear()
             return {
                 ...state,
                 token: null,
