@@ -23,7 +23,7 @@ const initialState = {
     token: localStorage.getItem('token'),
     isAunthenticated: null,
     isLoading: false,
-    user: JSON.parse(localStorage.getItem('user')),
+    user: {},
     success: null,
     checkPassword: false,
     userMsg: null
@@ -38,7 +38,6 @@ export default function (state = initialState, action) {
                 userMsg: null
             }
         case USER_LOADED:
-            localStorage.setItem('user', JSON.stringify(action.payload))
             return {
                 ...state,
                 isAunthenticated: true,
