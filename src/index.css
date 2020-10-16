@@ -1,12 +1,13 @@
 body {
   margin: 0;
   padding: 0;
-  background: url('./components/Pages/AuthPages/images/bg1.jpg') no-repeat center center/cover;
+  background: url("./components/Pages/AuthPages/images/bg1.jpg") no-repeat
+    center center/cover;
   background-attachment: fixed;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
 
@@ -25,7 +26,6 @@ code {
   color: gainsboro;
   text-decoration: none;
 }
-
 
 Button {
   text-decoration: none;

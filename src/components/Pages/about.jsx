@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import Cards from './UnAuthPages/Cards'
 import Loader from '../pageEffect/loader'
 import { AboutCard } from './UnAuthPages/aboutCard'
+import HelpCard from './UnAuthPages/heplCard'
 
 const About = (props) => {
     const { isAunthenticated, isLoading } = props
@@ -15,7 +15,7 @@ const About = (props) => {
             <div className="container">
                 <AboutCard />
             </div>
-            <Cards />
+            <HelpCard />
         </>
     }
     else {
