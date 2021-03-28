@@ -17,7 +17,7 @@ import {
     DELETE_ALL_TEACHER_BORROWERS,
     DELETE_ALL_TEACHER_RECORDS
 } from '../actionTypes'
-import { returnErrors } from '../errorAction'
+//import { returnErrors } from '../errorAction'
 import { tokenConfig } from '../auth/authActions'
 import rootURL from '../rootURL'
 import NetworkHandler from '../../networkHandler'
@@ -107,7 +107,7 @@ export const teacherSuccess = userId => async (dispatch) => {
 
     } catch (err) {
         NetworkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status))
+        //dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(teacherError())
     }
 }
@@ -119,8 +119,8 @@ export const addTeacher = ({ userId, firstName, lastName, gender, phone }) => as
         await dispatch(teacherLoading())
         await dispatch(teacherAddSuccess(response.data))
     } catch (err) {
-        NetworkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status, 'ADD_TEACHER_FAIL'))
+        NetworkHandler(err, 'ADD_TEACHER_FAIL')
+        //dispatch(returnErrors(err.response.data, err.response.status, 'ADD_TEACHER_FAIL'))
         dispatch(teacherError())
     }
 }
@@ -132,7 +132,7 @@ export const deleteTeacher = ({ userId, teacherId }) => async (dispatch, getStat
         response.data.success ? await dispatch(teacherDeleteSuccess(teacherId)) : dispatch(teacherError())
     } catch (err) {
         NetworkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status))
+        //dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(teacherError())
     }
 
@@ -146,8 +146,8 @@ export const editTeacher = ({ userId, teacherId, firstName, lastName, gender, ph
         await dispatch(teacherDeleteSuccess(teacherId))
         await dispatch(teacherUpdateSuccess(response.data))
     } catch (err) {
-        NetworkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status, 'EDIT_TEACHER_FAIL'))
+        NetworkHandler(err, 'EDIT_TEACHER_FAIL')
+        //dispatch(returnErrors(err.response.data, err.response.status, 'EDIT_TEACHER_FAIL'))
         dispatch(teacherError())
     }
 }
@@ -158,7 +158,7 @@ export const teacherBorrowerList = userId => async (dispatch, getState) => {
         await dispatch(teacherBorrowers(response.data))
     } catch (err) {
         NetworkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status))
+        //dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(teacherError())
     }
 }
@@ -169,7 +169,7 @@ export const teacherBorrowedBookList = userId => async (dispatch, getState) => {
         await dispatch(teacherBorrowedBooks(response.data))
     } catch (err) {
         NetworkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status))
+        //dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(teacherError())
     }
 }
@@ -181,8 +181,8 @@ export const lendTeacher = ({ userId, teacherId, numOfBooks, bookType, bookName 
         await dispatch(teacherLoading())
         await dispatch(teacherLending())
     } catch (err) {
-        NetworkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status, 'LEND_TEACHER_FAIL'))
+        NetworkHandler(err, 'LEND_TEACHER_FAIL')
+        //dispatch(returnErrors(err.response.data, err.response.status, 'LEND_TEACHER_FAIL'))
         dispatch(teacherError())
     }
 }
@@ -192,7 +192,7 @@ export const teacherRecords = userId => async (dispatch, getState) => {
         await dispatch(teacherRecordSuccess(response.data))
     } catch (err) {
         NetworkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status))
+        //dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(teacherError())
     }
 }
@@ -204,8 +204,8 @@ export const deleteBorrowers = ({ userId, teacherId, bookType, bookName }) => as
         await dispatch(teacherLoading())
         await dispatch(deleteTeacherBorrower())
     } catch (err) {
-        NetworkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status, 'TEACHER_DELETE_BORROWER_FAIL'))
+        NetworkHandler(err, 'TEACHER_DELETE_BORROWER_FAIL')
+        //dispatch(returnErrors(err.response.data, err.response.status, 'TEACHER_DELETE_BORROWER_FAIL'))
         dispatch(teacherError())
     }
 }
@@ -217,8 +217,8 @@ export const teacherReturnSuccess = ({ userId, teacherId, bookType, bookName, nu
         await dispatch(teacherLoading())
         await dispatch(teacherReturn())
     } catch (err) {
-        NetworkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status, 'RETURN_TEACHER_FAIL'))
+        NetworkHandler(err, 'RETURN_TEACHER_FAIL')
+        //dispatch(returnErrors(err.response.data, err.response.status, 'RETURN_TEACHER_FAIL'))
         dispatch(teacherError())
     }
 }
@@ -229,7 +229,7 @@ export const deleteAllTeachers = userId => async (dispatch, getState) => {
         await dispatch({ type: DELETE_ALL_TEACHERS })
     } catch (err) {
         NetworkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status))
+        //dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(teacherError())
     }
 }
@@ -240,7 +240,7 @@ export const deleteAllBorrowers = userId => async (dispatch, getState) => {
         await dispatch({ type: DELETE_ALL_TEACHER_BORROWERS })
     } catch (err) {
         NetworkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status))
+        //dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(teacherError())
     }
 }
@@ -251,7 +251,7 @@ export const deleteAllRecords = userId => async (dispatch, getState) => {
         await dispatch({ type: DELETE_ALL_TEACHER_RECORDS })
     } catch (err) {
         NetworkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status))
+        //dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(teacherError())
     }
 }

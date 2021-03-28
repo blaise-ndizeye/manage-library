@@ -1,11 +1,16 @@
-import { useDispatch } from 'react-redux'
+//import { useDispatch } from 'react-redux'
+import store from '../store'
+import { returnErrors } from './actions/errorAction'
+
 import { NETWORK_ERROR, NETWORK_SUCCESS } from './actions/actionTypes'
 
-export default function NetworkHandler(e) {
-    const dispatch = useDispatch()
-    if (e === 'Network Error') {
-        return dispatch({ type: NETWORK_ERROR })
+export default function NetworkHandler(e, errId) {
+    //const dispatch = useDispatch()
+    console.log(e.message === 'Network Error')
+    if (e.message === 'Network Error') {
+        return store.dispatch({ type: NETWORK_ERROR })
     } else {
-        return dispatch({ type: NETWORK_SUCCESS })
+        errId ? store.dispatch(returnErrors(e.response.data, e.response.status, errId)) : store.dispatch(returnErrors(e.response.data, e.response.status))
+        return store.dispatch({ type: NETWORK_SUCCESS })
     }
 }

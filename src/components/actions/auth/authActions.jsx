@@ -10,7 +10,7 @@ import {
     DELETE_ACCOUNT,
     DELETE_ACCOUNT_FAIL
 } from '../actionTypes'
-import { returnErrors } from '../errorAction'
+//import { returnErrors } from '../errorAction'
 import rootURL from '../rootURL'
 
 //check token and load user
@@ -24,7 +24,7 @@ export const loadUser = () => async (dispatch, getState) => {
         await dispatch({ type: USER_LOADED, payload: response.data })
     } catch (err) {
         networkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status))
+        // dispatch(returnErrors(err.response.data, err.response.status))
         dispatch({ type: AUTH_ERROR })
     }
 }
@@ -49,8 +49,8 @@ export const register = ({ name, email, password, password1 }) => async (dispatc
             payload: 'Successfully registered!! you can login now!!'
         })
     } catch (err) {
-        networkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL'))
+        networkHandler(err, 'REGISTER_FAIL')
+        //dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL'))
         dispatch({
             type: REGISTER_FAIL
         })
@@ -92,8 +92,8 @@ export const login = ({ email, password }) => async (dispatch) => {
             payload: response.data
         })
     } catch (err) {
-        networkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'))
+        networkHandler(err, 'LOGIN_FAIL')
+        //dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'))
         dispatch({
             type: LOGIN_FAIL
         })
@@ -116,8 +116,8 @@ export const checkPassword = ({ userId, email, password }) => async (dispatch, g
         await axios.post(`${rootURL}/api/user/checkPassword/${userId}`, body, tokenConfig(getState))
         await dispatch({ type: CHECK_PASSWORD })
     } catch (err) {
-        networkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status, 'CHECK_PASSWORD_FAIL'))
+        networkHandler(err, 'CHECK_PASSWORD_FAIL')
+        //dispatch(returnErrors(err.response.data, err.response.status, 'CHECK_PASSWORD_FAIL'))
         dispatch({ type: CHECK_PASSWORD_FAIL })
     }
 }
@@ -131,8 +131,8 @@ export const changePassword = ({ userId, password }) => async (dispatch, getStat
             payload: response.data
         })
     } catch (err) {
-        networkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status, 'CHANGE_PASSWORD_FAIL'))
+        networkHandler(err, 'CHANGE_PASSWORD_FAIL')
+        //dispatch(returnErrors(err.response.data, err.response.status, 'CHANGE_PASSWORD_FAIL'))
         dispatch({ type: CHANGE_PASSWORD_FAIL })
     }
 }
@@ -146,8 +146,8 @@ export const changeEmailOrUsername = ({ userId, username, email }) => async (dis
             payload: response.data
         })
     } catch (err) {
-        networkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status, 'CHANGE_EMAILORUSERNAME_FAIL'))
+        networkHandler(err, 'CHANGE_EMAILORUSERNAME_FAIL')
+        //dispatch(returnErrors(err.response.data, err.response.status, 'CHANGE_EMAILORUSERNAME_FAIL'))
         dispatch({ type: CHANGE_EMAILORUSERNAME_FAIL })
     }
 }
@@ -159,7 +159,7 @@ export const deleteAccount = userId => async (dispatch, getState) => {
         await dispatch(logout())
     } catch (err) {
         networkHandler(err)
-        dispatch(returnErrors(err.response.data, err.response.status))
+        //dispatch(returnErrors(err.response.data, err.response.status))
         dispatch({ type: DELETE_ACCOUNT_FAIL })
     }
 }
