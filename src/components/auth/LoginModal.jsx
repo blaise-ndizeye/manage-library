@@ -17,6 +17,7 @@ import { GoSignIn } from 'react-icons/go'
 import { login } from '../actions/auth/authActions'
 import { clearErrors } from '../actions/errorAction'
 import { NavLink, withRouter } from 'react-router-dom'
+import { networkErrorNotify } from '../notification'
 
 class LoginModal extends Component {
     state = {
@@ -34,7 +35,8 @@ class LoginModal extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { error } = this.props
+        const { error, networkError } = this.props
+        if (networkError) return networkErrorNotify()
 
         if (error !== prevProps.error) {
             if (error.id === 'LOGIN_FAIL') {
@@ -117,7 +119,8 @@ class LoginModal extends Component {
 }
 const mapStateToProps = state => ({
     isAunthenticated: state.auth.isAunthenticated,
-    error: state.error
+    error: state.error,
+    networkError: state.auth.networkError
 })
 
 export default connect(mapStateToProps, { login, clearErrors })(withRouter(LoginModal));

@@ -16,6 +16,7 @@ import PropTypes from 'prop-types'
 import { checkPassword, clearConfirmation } from '../actions/auth/authActions'
 import { clearErrors } from '../actions/errorAction'
 import { GoUnverified } from 'react-icons/go'
+import { networkErrorNotify } from '../notification'
 
 class CheckPasswordModal extends Component {
     state = {
@@ -32,7 +33,8 @@ class CheckPasswordModal extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { error, isAunthenticated, confirmation, clearConfirmation } = this.props
+        const { error, isAunthenticated, confirmation, clearConfirmation, networkError } = this.props
+        if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
             if (error.id === 'CHECK_PASSWORD_FAIL') {
                 this.setState({
@@ -74,6 +76,7 @@ class CheckPasswordModal extends Component {
 
     onSubmit = e => {
         e.preventDefault()
+        if (this.props.networkError) return networkErrorNotify()
         const { password } = this.state
         const { userId, email } = this.props
         const user = { email, password, userId }
@@ -116,7 +119,8 @@ const mapStateToProps = state => ({
     error: state.error,
     email: state.auth.user.email,
     userId: state.auth.user._id,
-    confirmation: state.auth.checkPassword
+    confirmation: state.auth.checkPassword,
+    networkError: state.auth.networkError
 })
 
 export default connect(mapStateToProps, { checkPassword, clearErrors, clearConfirmation })(withRouter(CheckPasswordModal));

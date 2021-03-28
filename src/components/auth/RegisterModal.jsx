@@ -16,7 +16,7 @@ import { register } from '../actions/auth/authActions'
 import { clearErrors, clearSuccess } from '../actions/errorAction'
 import { NavLink } from 'react-router-dom'
 import { BsPersonPlusFill } from 'react-icons/bs'
-import { registerNotify } from '../notification'
+import { networkErrorNotify, registerNotify } from '../notification'
 
 class RegisterModal extends Component {
     state = {
@@ -36,7 +36,8 @@ class RegisterModal extends Component {
 
     componentDidUpdate(prevProps) {
 
-        const { error, success } = this.props
+        const { error, success, networkError } = this.props
+        if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
             if (error.id === 'REGISTER_FAIL') {
                 this.setState({
@@ -147,7 +148,8 @@ class RegisterModal extends Component {
 const mapStateToProps = state => ({
     isAuthententicated: state.auth.isAuthententicated,
     error: state.error,
-    success: state.auth.success
+    success: state.auth.success,
+    networkError: state.auth.networkError
 })
 
 export default connect(mapStateToProps, { register, clearErrors, clearSuccess })(RegisterModal);

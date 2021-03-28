@@ -3,17 +3,19 @@ import { deleteAccount } from '../actions/auth/authActions'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { BsFillTrashFill } from 'react-icons/bs';
-import { deleteAccountNotify } from '../notification';
+import { deleteAccountNotify, networkErrorNotify } from '../notification';
 
 const DeleteAccountModal = (props) => {
 
     const [modal, setModal] = useState(false);
     const userId = useSelector(state => state.auth.user._id)
+    const networkError = useSelector(state => state.auth.networkError)
     const dispatch = useDispatch()
 
     const toggle = () => setModal(!modal)
 
     const requestAction = () => {
+        if (networkError) return networkErrorNotify()
         dispatch(deleteAccount(userId))
         toggle()
         deleteAccountNotify()

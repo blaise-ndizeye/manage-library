@@ -6,7 +6,7 @@ import { NETWORK_ERROR, NETWORK_SUCCESS } from './actions/actionTypes'
 
 export default function NetworkHandler(e, errId) {
     //const dispatch = useDispatch()
-    console.log(e.message === 'Network Error')
+    //console.log(e.message === 'Network Error')
     if (e.message === 'Network Error') {
         return store.dispatch({ type: NETWORK_ERROR })
     } else {

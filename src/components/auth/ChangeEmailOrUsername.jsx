@@ -15,7 +15,7 @@ import PropTypes from 'prop-types'
 import { changeEmailOrUsername, clearConfirmation } from '../actions/auth/authActions'
 import { clearErrors } from '../actions/errorAction'
 import { AiOutlineEdit } from 'react-icons/ai'
-import { updateNotify } from '../notification'
+import { updateNotify , networkErrorNotify} from '../notification'
 
 class ChangeEmailOrPasswordModal extends Component {
     state = {
@@ -33,7 +33,8 @@ class ChangeEmailOrPasswordModal extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { error, isAunthenticated, success, clearErrors } = this.props
+        const { error, isAunthenticated, success, clearErrors, networkError } = this.props
+        if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
 
             if (error.id === 'CHANGE_EMAILORUSERNAME_FAIL') {
@@ -75,6 +76,7 @@ class ChangeEmailOrPasswordModal extends Component {
 
     onSubmit = e => {
         e.preventDefault()
+        if (this.props.networkError) return networkErrorNotify()
         let { username, email } = this.state
         if (!username) {
             username = this.props.name
@@ -133,7 +135,8 @@ const mapStateToProps = state => ({
     userId: state.auth.user._id,
     success: state.auth.success,
     email: state.auth.user.email,
-    name: state.auth.user.name
+    name: state.auth.user.name,
+    networkError: state.auth.networkError
 })
 
 export default connect(mapStateToProps, { changeEmailOrUsername, clearConfirmation, clearErrors })(ChangeEmailOrPasswordModal);

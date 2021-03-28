@@ -48,5 +48,5 @@ export const registerNotify = () => {
 }
 
 export const networkErrorNotify = () => {
-    toast.warn('No network available')
+    toast.warn('Oops! No network available!!')
 }
