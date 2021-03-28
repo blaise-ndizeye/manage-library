@@ -16,7 +16,9 @@ import {
     CHANGE_PASSWORD_FAIL,
     CHANGE_EMAILORUSERNAME_FAIL,
     CLEAR_CONFIRMATION,
-    DELETE_ACCOUNT_FAIL
+    DELETE_ACCOUNT_FAIL,
+    NETWORK_ERROR,
+    NETWORK_SUCCESS
 } from '../../actions/actionTypes'
 
 const initialState = {
@@ -26,7 +28,8 @@ const initialState = {
     user: {},
     success: null,
     checkPassword: false,
-    userMsg: null
+    userMsg: null,
+    networkError: false
 }
 
 export default function (state = initialState, action) {
@@ -129,6 +132,16 @@ export default function (state = initialState, action) {
                 ...state,
                 checkPassword: false,
                 success: false
+            }
+        case NETWORK_ERROR:
+            return {
+                ...state,
+                networkError: true
+            }
+        case NETWORK_SUCCESS:
+            return {
+                ...state,
+                networkError: false
             }
         default:
             return state

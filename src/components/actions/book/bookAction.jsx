@@ -9,6 +9,7 @@ import {
 import { returnErrors } from '../errorAction'
 import { tokenConfig } from '../auth/authActions'
 import rootURL from '../rootURL'
+import NetworkHandler from '../../networkHandler'
 
 export const deleteSuccess = () => ({
     type: DELETE_SUCCESS
@@ -54,6 +55,7 @@ export const bookSuccess = userId => async (dispatch) => {
         await dispatch(bookList(response.data))
 
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(bookError())
     }
@@ -66,6 +68,7 @@ export const addBook = ({ userId, numOfBooks, typeOfBooks }) => async (dispatch,
         await dispatch(bookLoading())
         await dispatch(bookAddSuccess(response.data))
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status, 'ADD_BOOK_FAIL'))
         dispatch(bookError())
     }
@@ -77,6 +80,7 @@ export const deleteBook = ({ userId, bookId }) => async (dispatch, getState) => 
         const response = await axios.delete(`${rootURL}/api/book/${userId}/${bookId}`, tokenConfig(getState))
         response.data.success ? await dispatch(bookDeleteSuccess(bookId)) : dispatch(bookError())
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(bookError())
     }
@@ -91,6 +95,7 @@ export const editBook = ({ userId, bookId, numOfBooks, typeOfBooks }) => async (
         await dispatch(bookDeleteSuccess(bookId))
         await dispatch(bookUpdateSuccess(response.data))
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status, 'EDIT_BOOK_FAIL'))
         dispatch(bookError())
     }
@@ -101,6 +106,7 @@ export const deleteAllBooks = userId => async (dispatch, getState) => {
         await axios.delete(`${rootURL}/api/bookSettings/deleteAllBooks/${userId}`, tokenConfig(getState))
         await dispatch({ type: DELETE_ALL_BOOKS })
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(bookError())
     }

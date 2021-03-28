@@ -26,6 +26,7 @@ import {
 import { returnErrors } from '../errorAction'
 import { tokenConfig } from '../auth/authActions'
 import rootURL from '../rootURL'
+import NetworkHandler from '../../networkHandler'
 
 export const deleteSuccess = () => ({
     type: DELETE_SUCCESS
@@ -114,6 +115,7 @@ export const studentSuccess = userId => async (dispatch) => {
         await dispatch(studentList(response.data))
 
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(studentError())
     }
@@ -127,6 +129,7 @@ export const addStudent = ({ userId, firstName, lastName, Class, gender, age }) 
         await dispatch(studentLoading())
         await dispatch(studentAddSuccess(response.data))
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status, 'ADD_STUDENT_FAIL'))
         dispatch(studentError())
     }
@@ -138,6 +141,7 @@ export const deleteStudent = ({ userId, studentId }) => async (dispatch, getStat
         await dispatch(studentLoading())
         response.data.success ? await dispatch(studentDeleteSuccess(studentId)) : dispatch(studentError())
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(studentError())
     }
@@ -152,6 +156,7 @@ export const editStudent = ({ userId, studentId, firstName, lastName, Class, gen
         await dispatch(studentDeleteSuccess(studentId))
         await dispatch(studentUpdateSuccess(response.data))
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status, 'EDIT_STUDENT_FAIL'))
         dispatch(studentError())
     }
@@ -164,6 +169,7 @@ export const lendStudent = ({ userId, borrowerId, bookType, bookName, bookId, $b
         await dispatch(studentLoading())
         await dispatch(studentLending(response.data))
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status, 'LEND_STUDENT_FAIL'))
         dispatch(studentError())
     }
@@ -174,6 +180,7 @@ export const studentBorrowerList = userId => async (dispatch, getState) => {
         const response = await axios.get(`${rootURL}/api/student/borrower/${userId}`)
         await dispatch(studentBorrowers(response.data))
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(studentError())
     }
@@ -184,6 +191,7 @@ export const studentBorrowedBookList = userId => async (dispatch, getState) => {
         const response = await axios.get(`${rootURL}/api/student/borrowedBook/${userId}`)
         await dispatch(studentBorrowedBooks(response.data))
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(studentError())
     }
@@ -208,6 +216,7 @@ export const deleteBorrowers = ({ userId, studentId, bookId, bookName, bookType 
         await axios.post(`${rootURL}/api/student/borrower/${userId}/${studentId}`, body, tokenConfig(getState))
         await dispatch(deleteStudentBorrower())
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status, 'STUDENT_DELETE_BORROWER_FAIL'))
         dispatch(studentError())
     }
@@ -218,6 +227,7 @@ export const studentRecords = userId => async (dispatch, getState) => {
         const response = await axios.post(`${rootURL}/api/student/record/${userId}`)
         await dispatch(studentRecordList(response.data))
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(studentError())
     }
@@ -228,6 +238,7 @@ export const deleteAllStudents = userId => async (dispatch, getState) => {
         await axios.delete(`${rootURL}/api/studentSettings/deleteAllStudents/${userId}`, tokenConfig(getState))
         await dispatch({ type: DELETE_ALL_STUDENTS })
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(studentError())
     }
@@ -239,6 +250,7 @@ export const deleteAllBorrowers = userId => async (dispatch, getState) => {
         console.log(response)
         await dispatch({ type: DELETE_ALL_STUDENT_BORROWERS })
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(studentError())
     }
@@ -249,6 +261,7 @@ export const deleteAllRecords = userId => async (dispatch, getState) => {
         await axios.delete(`${rootURL}/api/studentSettings/deleteAllRecords/${userId}`, tokenConfig(getState))
         await dispatch({ type: DELETE_ALL_STUDENT_RECORDS })
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(studentError())
     }
@@ -259,6 +272,7 @@ export const promoteStudents = userId => async (dispatch, getState) => {
         await axios.post(`${rootURL}/api/studentSettings/promoteStudents/${userId}`, {}, tokenConfig(getState))
         await dispatch({ type: PROMOTE_STUDENTS })
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(studentError())
     }
@@ -270,6 +284,7 @@ export const returnForFinalists = ({ userId, studentId }) => async (dispatch, ge
         await dispatch(studentLoading())
         await dispatch({ type: RETURN_FOR_FINALIST })
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(studentError())
     }
@@ -283,6 +298,7 @@ export const finalistList = userId => async (dispatch, getState) => {
             payload: response.data
         })
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(studentError())
     }
@@ -293,6 +309,7 @@ export const deleteAllFinalists = userId => async (dispatch, getState) => {
         await axios.get(`${rootURL}/api/studentSettings/deleteAllFinalists/${userId}`, tokenConfig(getState))
         await dispatch({ type: DELETE_ALL_FINALISTS })
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(studentError())
     }
@@ -304,6 +321,7 @@ export const deleteFinalist = ({ userId, studentId }) => async (dispatch, getSta
         await dispatch(studentLoading())
         await dispatch({ type: DELETE_FINALIST })
     } catch (err) {
+        NetworkHandler(err)
         dispatch(returnErrors(err.response.data, err.response.status))
         dispatch(studentError())
     }
