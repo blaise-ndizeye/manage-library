@@ -4,13 +4,14 @@ import { connect, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import { BsFillTrashFill } from 'react-icons/bs'
-import { deleteNotify } from '../notification'
+import { deleteNotify, networkErrorNotify } from '../notification'
 
 const DeleteBorrower = (props) => {
 
     const { studentId, bookId, bookName, bookType, deleteBorrowers } = props
     const [modal, setModal] = useState(false);
     const userId = useSelector(state => state.auth.user._id)
+    const networkError = useSelector(state => state.auth.networkError)
 
     const toggle = () => {
         props.deleteSuccess()
@@ -18,6 +19,7 @@ const DeleteBorrower = (props) => {
     }
 
     const requestAction = () => {
+        if (networkError) return networkErrorNotify()
         deleteBorrowers({ userId, studentId, bookId, bookType, bookName })
         deleteNotify('Student borrower')
     }

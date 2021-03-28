@@ -3,17 +3,19 @@ import { promoteStudents } from '../actions/student/studentAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { AiOutlineVerticalAlignTop } from 'react-icons/ai';
-import { promoteNotify } from '../notification';
+import { networkErrorNotify, promoteNotify } from '../notification';
 
 const PromoteStudentsModal = (props) => {
 
     const [modal, setModal] = useState(false);
     const userId = useSelector(state => state.auth.user._id)
+    const networkError = useSelector(state => state.auth.networkError)
     const dispatch = useDispatch()
 
     const toggle = () => setModal(!modal)
 
     const requestAction = () => {
+        if (networkError) return networkErrorNotify()
         dispatch(promoteStudents(userId))
         toggle()
         promoteNotify()

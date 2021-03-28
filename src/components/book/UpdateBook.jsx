@@ -16,7 +16,7 @@ import { editBook, deleteSuccess } from '../actions/book/bookAction'
 import { clearErrors, clearSuccess } from '../actions/errorAction'
 import { Redirect } from 'react-router-dom'
 import { AiOutlineEdit } from 'react-icons/ai'
-import { updateNotify } from '../notification'
+import { networkErrorNotify, updateNotify } from '../notification'
 
 class EditBookModal extends Component {
     state = {
@@ -36,7 +36,10 @@ class EditBookModal extends Component {
 
     componentDidUpdate(prevProps) {
 
-        const { error, isAunthenticated, success, deleteSuccess } = this.props
+        const { error, isAunthenticated, success, deleteSuccess, networkError } = this.props
+        if (networkError) {
+            networkErrorNotify()
+        }
         if (error !== prevProps.error) {
             if (error.id === 'EDIT_BOOK_FAIL') {
                 this.setState({
@@ -146,7 +149,8 @@ const mapStateToProps = state => ({
     isAunthenticated: state.auth.isAunthenticated,
     error: state.error,
     success: state.book.success,
-    user: state.auth.user._id
+    user: state.auth.user._id,
+    networkError: state.auth.networkError
 })
 
 export default connect(mapStateToProps, { editBook, clearErrors, clearSuccess, deleteSuccess })(EditBookModal);

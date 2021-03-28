@@ -18,7 +18,7 @@ import PropTypes from 'prop-types'
 import { addTeacher, deleteSuccess } from '../actions/teacher/teacherAction'
 import { clearErrors, clearSuccess } from '../actions/errorAction'
 import { BsPersonPlusFill } from 'react-icons/bs'
-import { addNotify } from '../notification'
+import { addNotify, networkErrorNotify } from '../notification'
 
 class AddTeacherModal extends Component {
     state = {
@@ -39,7 +39,8 @@ class AddTeacherModal extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        const { error, isAunthenticated, success, deleteSuccess } = this.props
+        const { error, isAunthenticated, success, deleteSuccess, networkError } = this.props
+        if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
 
             if (error.id === 'ADD_TEACHER_FAIL') {
@@ -160,7 +161,8 @@ const mapStateToProps = state => ({
     error: state.error,
     success: state.teacher.success,
     user: state.auth.user._id,
-    genders: state.student.genders
+    genders: state.student.genders,
+    networkError: state.auth.networkError
 })
 
 export default connect(mapStateToProps, { addTeacher, clearErrors, clearSuccess, deleteSuccess })(AddTeacherModal);

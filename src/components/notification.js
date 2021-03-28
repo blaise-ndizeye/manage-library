@@ -46,3 +46,7 @@ export const updateNotify = data => {
 export const registerNotify = () => {
     toast.success('You have been successfully registered')
 }
+
+export const networkErrorNotify = () => {
+    toast.warn('No network available')
+}

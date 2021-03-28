@@ -17,7 +17,7 @@ import { clearErrors, clearSuccess } from '../actions/errorAction'
 import { Redirect } from 'react-router-dom'
 import Select from 'react-select'
 import { AiOutlineEdit } from 'react-icons/ai'
-import { updateNotify } from '../notification'
+import { networkErrorNotify, updateNotify } from '../notification'
 
 class EditTeacherModal extends Component {
     state = {
@@ -39,7 +39,8 @@ class EditTeacherModal extends Component {
 
     componentDidUpdate(prevProps) {
 
-        const { error, isAunthenticated, success, deleteSuccess } = this.props
+        const { error, isAunthenticated, success, deleteSuccess, networkError } = this.props
+        if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
             if (error.id === 'EDIT_TEACHER_FAIL') {
                 this.setState({
@@ -174,7 +175,8 @@ const mapStateToProps = state => ({
     error: state.error,
     success: state.teacher.success,
     user: state.auth.user._id,
-    genders: state.student.genders
+    genders: state.student.genders,
+    networkError: state.auth.networkError
 })
 
 export default connect(mapStateToProps, { editTeacher, clearErrors, clearSuccess, deleteSuccess })(EditTeacherModal);

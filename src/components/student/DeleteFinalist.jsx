@@ -3,18 +3,20 @@ import { deleteFinalist } from '../actions/student/studentAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { BsFillTrashFill } from 'react-icons/bs';
-import { deleteNotify } from '../notification';
+import { deleteNotify, networkErrorNotify } from '../notification';
 
 const DeleteFinalistModal = (props) => {
 
     const [modal, setModal] = useState(false);
     const userId = useSelector(state => state.auth.user._id)
+    const networkError = useSelector(state => state.auth.networkError)
     const dispatch = useDispatch()
     const { studentId } = props
 
     const toggle = () => setModal(!modal)
 
     const requestAction = () => {
+        if (networkError) return networkErrorNotify()
         dispatch(deleteFinalist({ userId, studentId }))
         toggle()
         deleteNotify('Finalist')

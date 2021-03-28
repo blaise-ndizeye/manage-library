@@ -16,7 +16,7 @@ import { addBook, deleteSuccess } from '../actions/book/bookAction'
 import { clearErrors, clearSuccess } from '../actions/errorAction'
 import { Redirect } from 'react-router-dom'
 import { BsPlusCircle, BsPlusCircleFill } from 'react-icons/bs'
-import { addNotify } from '../notification'
+import { addNotify, networkErrorNotify } from '../notification'
 
 class AddBookModal extends Component {
     state = {
@@ -36,7 +36,10 @@ class AddBookModal extends Component {
 
     componentDidUpdate(prevProps) {
 
-        const { error, isAunthenticated, success, deleteSuccess } = this.props
+        const { error, isAunthenticated, success, deleteSuccess, networkError } = this.props
+        if (networkError) {
+            return networkErrorNotify()
+        }
         if (error !== prevProps.error) {
             if (error.id === 'ADD_BOOK_FAIL') {
                 this.setState({
@@ -136,7 +139,8 @@ const mapStateToProps = state => ({
     isAunthenticated: state.auth.isAunthenticated,
     error: state.error,
     success: state.book.success,
-    user: state.auth.user._id
+    user: state.auth.user._id,
+    networkError: state.auth.networkError
 })
 
 export default connect(mapStateToProps, { addBook, clearErrors, clearSuccess, deleteSuccess })(AddBookModal);

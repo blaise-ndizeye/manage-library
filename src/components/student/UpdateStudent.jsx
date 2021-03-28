@@ -18,7 +18,7 @@ import { AiOutlineEdit } from 'react-icons/ai'
 
 import { editStudent } from '../actions/student/studentAction'
 import { clearErrors, clearSuccess } from '../actions/errorAction'
-import { updateNotify } from '../notification'
+import { networkErrorNotify, updateNotify } from '../notification'
 
 class EditStudentModal extends Component {
     state = {
@@ -41,7 +41,8 @@ class EditStudentModal extends Component {
 
     componentDidUpdate(prevProps) {
 
-        const { error, isAunthenticated } = this.props
+        const { error, isAunthenticated, networkError } = this.props
+        if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
 
             if (error.id === 'EDIT_STUDENT_FAIL') {
@@ -193,7 +194,8 @@ const mapStateToProps = state => ({
     success: state.student.success,
     user: state.auth.user._id,
     genders: state.student.genders,
-    classes: state.student.classes
+    classes: state.student.classes,
+    networkError: state.auth.networkError
 })
 
 export default connect(mapStateToProps, { editStudent, clearErrors, clearSuccess })(EditStudentModal);

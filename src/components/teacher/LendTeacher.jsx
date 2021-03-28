@@ -16,7 +16,7 @@ import { lendTeacher, deleteSuccess } from '../actions/teacher/teacherAction'
 import { clearErrors, clearSuccess } from '../actions/errorAction'
 import { Redirect } from 'react-router-dom'
 import { AiOutlineExport } from 'react-icons/ai'
-import { lendNotify } from '../notification'
+import { lendNotify, networkErrorNotify } from '../notification'
 
 class LendTeacherModal extends Component {
     state = {
@@ -37,7 +37,8 @@ class LendTeacherModal extends Component {
 
     componentDidUpdate(prevProps) {
 
-        const { error, isAunthenticated, success, deleteSuccess } = this.props
+        const { error, isAunthenticated, success, deleteSuccess, networkError } = this.props
+        if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
 
             if (error.id === 'LEND_TEACHER_FAIL') {
@@ -148,6 +149,7 @@ const mapStateToProps = state => ({
     error: state.error,
     success: state.teacher.success,
     userId: state.auth.user._id,
+    networkError: state.aut.networkError
 })
 
 export default connect(mapStateToProps, { lendTeacher, clearErrors, clearSuccess, deleteSuccess })(LendTeacherModal);

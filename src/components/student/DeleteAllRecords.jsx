@@ -3,17 +3,19 @@ import { deleteAllRecords } from '../actions/student/studentAction'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { BsFillTrashFill } from 'react-icons/bs';
-import { deleteAllNotify } from '../notification';
+import { deleteAllNotify, networkErrorNotify } from '../notification';
 
 const DeleteAllStudentRecordsModal = (props) => {
 
     const [modal, setModal] = useState(false);
     const userId = useSelector(state => state.auth.user._id)
+    const networkError = useSelector(state => state.auth.networkError)
     const dispatch = useDispatch()
 
     const toggle = () => setModal(!modal)
 
     const requestAction = () => {
+        if (networkError) return networkErrorNotify()
         dispatch(deleteAllRecords(userId))
         toggle()
         deleteAllNotify('All student records')

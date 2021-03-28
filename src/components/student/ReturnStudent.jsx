@@ -4,12 +4,13 @@ import { connect, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { AiOutlineImport } from 'react-icons/ai';
-import { returnNotify } from '../notification';
+import { networkErrorNotify, returnNotify } from '../notification';
 
 const StudentReturnModal = (props) => {
 
     const [modal, setModal] = useState(false);
     const userId = useSelector(state => state.auth.user._id)
+    const networkError = useSelector(state => state.auth.networkError)
     const { bookId, bookName, bookType, studentId } = props
 
     const toggle = () => {
@@ -17,6 +18,7 @@ const StudentReturnModal = (props) => {
     };
 
     const handleReturn = () => {
+        if (networkError) return networkErrorNotify()
         props.studentReturnSuccess({ bookId, bookName, bookType, studentId, userId })
         returnNotify()
     }

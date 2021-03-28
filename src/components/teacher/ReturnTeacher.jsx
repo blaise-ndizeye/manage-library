@@ -16,7 +16,7 @@ import { teacherReturnSuccess, deleteSuccess } from '../actions/teacher/teacherA
 import { clearErrors, clearSuccess } from '../actions/errorAction'
 import { Redirect } from 'react-router-dom'
 import { AiOutlineImport } from 'react-icons/ai'
-import { returnNotify } from '../notification'
+import { networkErrorNotify, returnNotify } from '../notification'
 
 class ReturnTeacherModal extends Component {
     state = {
@@ -35,7 +35,8 @@ class ReturnTeacherModal extends Component {
 
     componentDidUpdate(prevProps) {
 
-        const { error, isAunthenticated, success, deleteSuccess } = this.props
+        const { error, isAunthenticated, success, deleteSuccess, networkError } = this.props
+        if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
 
             if (error.id === 'RETURN_TEACHER_FAIL') {
@@ -127,6 +128,7 @@ const mapStateToProps = state => ({
     error: state.error,
     success: state.teacher.success,
     userId: state.auth.user._id,
+    networkError: state.auth.networkError
 })
 
 export default connect(mapStateToProps, { teacherReturnSuccess, clearErrors, clearSuccess, deleteSuccess })(ReturnTeacherModal);

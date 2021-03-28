@@ -4,17 +4,19 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { BsFillTrashFill } from 'react-icons/bs';
 
 import { deleteAllFinalists } from '../actions/student/studentAction'
-import { deleteAllNotify } from '../notification';
+import { deleteAllNotify, networkErrorNotify } from '../notification';
 
 const DeleteAllFinalistsModal = (props) => {
 
     const [modal, setModal] = useState(false);
     const userId = useSelector(state => state.auth.user._id)
+    const networkError = useSelector(state => state.auth.networkError)
     const dispatch = useDispatch()
 
     const toggle = () => setModal(!modal)
 
     const requestAction = () => {
+        if (networkError) return networkErrorNotify()
         dispatch(deleteAllFinalists(userId))
         toggle()
         deleteAllNotify('All finalist borrowers')

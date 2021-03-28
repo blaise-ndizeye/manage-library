@@ -16,7 +16,7 @@ import { lendStudent, deleteSuccess } from '../actions/student/studentAction'
 import { clearErrors, clearSuccess } from '../actions/errorAction'
 import { Redirect } from 'react-router-dom'
 import { AiOutlineExport } from 'react-icons/ai'
-import { lendNotify } from '../notification'
+import { lendNotify, networkErrorNotify } from '../notification'
 
 class LendStudentModal extends Component {
     state = {
@@ -41,7 +41,8 @@ class LendStudentModal extends Component {
 
     componentDidUpdate(prevProps) {
 
-        const { error, isAunthenticated, success, deleteSuccess } = this.props
+        const { error, isAunthenticated, success, deleteSuccess, networkError } = this.props
+        if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
 
             if (error.id === 'LEND_STUDENT_FAIL') {
@@ -188,7 +189,8 @@ const mapStateToProps = state => ({
     error: state.error,
     success: state.student.success,
     userId: state.auth.user._id,
-    students: state.student.students
+    students: state.student.students,
+    networkError: state.auth.networkError
 })
 
 export default connect(mapStateToProps, { lendStudent, clearErrors, clearSuccess, deleteSuccess })(LendStudentModal);
