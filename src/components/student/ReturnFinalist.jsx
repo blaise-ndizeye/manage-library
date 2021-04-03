@@ -9,16 +9,19 @@ import { networkErrorNotify, returnNotify } from '../notification';
 const FinalistReturnModal = (props) => {
 
     const [modal, setModal] = useState(false);
+    const [loading, setLoading] = useState(false)
     const userId = useSelector(state => state.auth.user._id)
     const networkError = useSelector(state => state.auth.networkError)
     const { studentId } = props
 
     const toggle = () => {
+        setLoading(false)
         setModal(!modal)
     };
 
     const handleReturn = () => {
         if (networkError) return networkErrorNotify()
+        setTimeout(() => setLoading(true), 1000)
         props.returnForFinalists({ studentId, userId })
         toggle()
         returnNotify()
@@ -35,7 +38,7 @@ const FinalistReturnModal = (props) => {
                     Are you sure to return this finalist's book?
           </ModalBody>
                 <ModalFooter>
-                    <Button block color="warning" onClick={handleReturn}><AiOutlineImport /> OK</Button>{' '}
+                    <Button block color="warning" onClick={handleReturn}>{loading ? 'Loading' : (<><AiOutlineImport /> OK</>)}</Button>{' '}
                 </ModalFooter>
             </Modal>
         </div>

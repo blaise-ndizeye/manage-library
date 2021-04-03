@@ -24,7 +24,8 @@ class AddBookModal extends Component {
         numOfBooks: '',
         typeOfBooks: '',
         msg: null,
-        dropdownOpen: false
+        dropdownOpen: false,
+        loading: false
     }
 
     static propTypes = {
@@ -41,6 +42,7 @@ class AddBookModal extends Component {
             return networkErrorNotify()
         }
         if (error !== prevProps.error) {
+            this.setState({ loading: false })
             if (error.id === 'ADD_BOOK_FAIL') {
                 this.setState({
                     msg: error.msg.message
@@ -67,7 +69,7 @@ class AddBookModal extends Component {
     }
 
     toggle = () => {
-
+        this.setState({ loading: false })
         this.props.clearErrors()
         this.setState({
             modal: !this.state.modal
@@ -92,6 +94,7 @@ class AddBookModal extends Component {
         const userId = this.props.user
 
         const newBook = { numOfBooks, typeOfBooks, userId }
+        this.setState({ loading: true })
         this.props.addBook(newBook)
     }
 
@@ -125,7 +128,7 @@ class AddBookModal extends Component {
                                 onChange={this.onChange} required />
 
                             <Button type="submit" color="dark" style={{ marginTop: '2rem' }} block>
-                                <BsPlusCircle /> Add
+                                {this.state.loading ? 'Loading' : (<><BsPlusCircle /> Add</>)}
                         </Button>
                         </FormGroup>
                     </Form>

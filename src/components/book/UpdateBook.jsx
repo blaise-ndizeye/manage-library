@@ -24,7 +24,8 @@ class EditBookModal extends Component {
         numOfBooks: '',
         typeOfBooks: '',
         msg: null,
-        dropdownOpen: false
+        dropdownOpen: false,
+        loading: false
     }
 
     static propTypes = {
@@ -41,6 +42,7 @@ class EditBookModal extends Component {
             networkErrorNotify()
         }
         if (error !== prevProps.error) {
+            this.setState({ loading: false })
             if (error.id === 'EDIT_BOOK_FAIL') {
                 this.setState({
                     msg: error.msg.message
@@ -68,6 +70,7 @@ class EditBookModal extends Component {
 
     toggle = () => {
         this.props.clearErrors()
+        this.setState({ loading: false })
         this.setState({
             modal: !this.state.modal
         })
@@ -98,6 +101,7 @@ class EditBookModal extends Component {
         const bookId = this.props.bookId
 
         const updatedTeacher = { numOfBooks, userId, typeOfBooks, bookId }
+        this.setState({ loading: true })
         this.props.editBook(updatedTeacher)
     }
 
@@ -135,7 +139,7 @@ class EditBookModal extends Component {
                                 onChange={this.onChange} required />
 
                             <Button type="submit" color="dark" style={{ marginTop: '2rem' }} block>
-                                <AiOutlineEdit /> Edit
+                                {this.state.loading ? 'Loading' : (<><AiOutlineEdit /> Edit</>)}
                         </Button>
                         </FormGroup>
                     </Form>

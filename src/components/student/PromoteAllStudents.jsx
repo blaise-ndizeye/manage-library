@@ -8,14 +8,19 @@ import { networkErrorNotify, promoteNotify } from '../notification';
 const PromoteStudentsModal = (props) => {
 
     const [modal, setModal] = useState(false);
+    const [loading, setLoading] = useState(false)
     const userId = useSelector(state => state.auth.user._id)
     const networkError = useSelector(state => state.auth.networkError)
     const dispatch = useDispatch()
 
-    const toggle = () => setModal(!modal)
+    const toggle = () => {
+        setLoading(false)
+        setModal(!modal)
+    }
 
     const requestAction = () => {
         if (networkError) return networkErrorNotify()
+        setTimeout(() => setLoading(true), 1000)
         dispatch(promoteStudents(userId))
         toggle()
         promoteNotify()
@@ -32,7 +37,7 @@ const PromoteStudentsModal = (props) => {
                     Are you sure to promote all students and update the repeating ones manually?
                 </ModalBody>
                 <ModalFooter>
-                    <Button block color="danger" onClick={requestAction}><AiOutlineVerticalAlignTop /> OK</Button>{' '}
+                    <Button block color="danger" onClick={requestAction}> {loading ? 'Loading' : (<><AiOutlineVerticalAlignTop /> OK</>)}</Button>{' '}
                 </ModalFooter>
             </Modal>
         </>

@@ -29,7 +29,8 @@ class LendStudentModal extends Component {
         $bookId: '',
         msg: null,
         dropdownOpen: false,
-        student: this.props.students.find(student => student._id === this.props.borrowerId)
+        student: this.props.students.find(student => student._id === this.props.borrowerId),
+        loading: false
     }
 
     static propTypes = {
@@ -44,7 +45,7 @@ class LendStudentModal extends Component {
         const { error, isAunthenticated, success, deleteSuccess, networkError } = this.props
         if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
-
+            this.setState({ loading: false })
             if (error.id === 'LEND_STUDENT_FAIL') {
                 this.setState({
                     msg: error.msg.message
@@ -74,7 +75,7 @@ class LendStudentModal extends Component {
     }
 
     toggle = () => {
-
+        this.setState({ loading: false })
         this.props.clearErrors()
         this.setState({
             modal: !this.state.modal
@@ -99,7 +100,7 @@ class LendStudentModal extends Component {
         const { userId, borrowerId } = this.props
 
         const newBorrower = { bookId, bookType, bookName, $bookId, $bookType, $bookName, userId, borrowerId }
-
+        this.setState({ loading: true })
         this.props.lendStudent(newBorrower)
     }
 
@@ -174,7 +175,7 @@ class LendStudentModal extends Component {
                             </div>
 
                             <Button type="submit" color="dark" style={{ marginTop: '2rem' }} block>
-                                <AiOutlineExport /> Lend
+                                {this.state.loading ? 'Loading' : (<><AiOutlineExport /> Lend</>)}
                         </Button>
                         </FormGroup>
                     </Form>

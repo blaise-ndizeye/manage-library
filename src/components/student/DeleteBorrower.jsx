@@ -10,16 +10,19 @@ const DeleteBorrower = (props) => {
 
     const { studentId, bookId, bookName, bookType, deleteBorrowers } = props
     const [modal, setModal] = useState(false);
+    const [loading, setLoading] = useState(false)
     const userId = useSelector(state => state.auth.user._id)
     const networkError = useSelector(state => state.auth.networkError)
 
     const toggle = () => {
+        setLoading(false)
         props.deleteSuccess()
         setModal(!modal)
     }
 
     const requestAction = () => {
         if (networkError) return networkErrorNotify()
+        setTimeout(() => setLoading(true), 1000)
         deleteBorrowers({ userId, studentId, bookId, bookType, bookName })
         deleteNotify('Student borrower')
     }
@@ -35,7 +38,7 @@ const DeleteBorrower = (props) => {
                     Are you sure to delete this borrower?
           </ModalBody>
                 <ModalFooter>
-                    <Button block color="danger" onClick={requestAction}><BsFillTrashFill /> OK</Button>{' '}
+                    <Button block color="danger" onClick={requestAction}>{loading ? 'Loading' : (<><BsFillTrashFill /> OK</>)}</Button>{' '}
                 </ModalFooter>
             </Modal>
         </div>

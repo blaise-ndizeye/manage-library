@@ -8,15 +8,20 @@ import { deleteNotify, networkErrorNotify } from '../notification';
 const DeleteFinalistModal = (props) => {
 
     const [modal, setModal] = useState(false);
+    const [loading, setLoading] = useState(false)
     const userId = useSelector(state => state.auth.user._id)
     const networkError = useSelector(state => state.auth.networkError)
     const dispatch = useDispatch()
     const { studentId } = props
 
-    const toggle = () => setModal(!modal)
+    const toggle = () => {
+        setLoading(false)
+        setModal(!modal)
+    }
 
     const requestAction = () => {
         if (networkError) return networkErrorNotify()
+        setTimeout(() => setLoading(true), 1000)
         dispatch(deleteFinalist({ userId, studentId }))
         toggle()
         deleteNotify('Finalist')
@@ -33,7 +38,7 @@ const DeleteFinalistModal = (props) => {
                     Are you sure to delete this finalist borrower?
                 </ModalBody>
                 <ModalFooter>
-                    <Button block color="danger" onClick={requestAction}><BsFillTrashFill /> OK</Button>{' '}
+                    <Button block color="danger" onClick={requestAction}>{loading ? 'Loading' : (<><BsFillTrashFill /> OK</>)}</Button>{' '}
                 </ModalFooter>
             </Modal>
         </>
