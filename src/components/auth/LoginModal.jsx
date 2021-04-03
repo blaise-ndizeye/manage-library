@@ -24,7 +24,8 @@ class LoginModal extends Component {
         modal: false,
         email: '',
         password: '',
-        msg: null
+        msg: null,
+        loading: false
     }
 
     static propTypes = {
@@ -39,6 +40,7 @@ class LoginModal extends Component {
         if (networkError) return networkErrorNotify()
 
         if (error !== prevProps.error) {
+            this.setState({ loading: false })
             if (error.id === 'LOGIN_FAIL') {
                 this.setState({
                     msg: error.msg.message
@@ -55,6 +57,7 @@ class LoginModal extends Component {
 
     toggle = () => {
         this.props.clearErrors()
+        this.setState({ loading: false })
         this.setState({
             modal: !this.state.modal
         })
@@ -70,6 +73,7 @@ class LoginModal extends Component {
         e.preventDefault()
         const { email, password } = this.state
         const user = { email, password }
+        this.setState({ loading: true })
         this.props.login(user)
         if (this.props.isAunthenticated) {
             this.toggle()
@@ -107,7 +111,7 @@ class LoginModal extends Component {
                                 onChange={this.onChange} required />
 
                             <Button color="dark" style={{ marginTop: '2rem' }} block>
-                                <GoSignIn /> Login
+                                {this.state.loading ? 'Loading' : (<><GoSignIn /> Login</>)} 
                         </Button>
                         </FormGroup>
                     </Form>

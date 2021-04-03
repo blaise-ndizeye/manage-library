@@ -22,7 +22,8 @@ class CheckPasswordModal extends Component {
     state = {
         modal: false,
         password: '',
-        msg: null
+        msg: null,
+        loading: false
     }
 
     static propTypes = {
@@ -36,6 +37,7 @@ class CheckPasswordModal extends Component {
         const { error, isAunthenticated, confirmation, clearConfirmation, networkError } = this.props
         if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
+            this.setState({ loading: false })
             if (error.id === 'CHECK_PASSWORD_FAIL') {
                 this.setState({
                     msg: error.msg.message
@@ -63,6 +65,7 @@ class CheckPasswordModal extends Component {
     }
 
     toggle = () => {
+        this.setState({ loading: false })
         this.setState({
             modal: !this.state.modal
         })
@@ -80,6 +83,7 @@ class CheckPasswordModal extends Component {
         const { password } = this.state
         const { userId, email } = this.props
         const user = { email, password, userId }
+        this.setState({ loading: true })
         this.props.checkPassword(user)
     }
 
@@ -104,8 +108,8 @@ class CheckPasswordModal extends Component {
                                     onChange={this.onChange} required />
 
                                 <Button color="dark" style={{ marginTop: '2rem' }} block>
-                                    <GoUnverified /> Verify
-                        </Button>
+                                    {this.state.loading ? 'Loading' : (<><GoUnverified /> Verify</>)}
+                                </Button>
                             </FormGroup>
                         </Form>
                     </ModalBody>

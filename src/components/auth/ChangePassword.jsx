@@ -21,7 +21,8 @@ class ChangePasswordModal extends Component {
     state = {
         modal: false,
         password: '',
-        msg: null
+        msg: null,
+        loading: false
     }
 
     static propTypes = {
@@ -36,6 +37,7 @@ class ChangePasswordModal extends Component {
         if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
 
+            this.setState({ loading: false })
             if (error.id === 'CHANGE_PASSWORD_FAIL') {
                 this.setState({
                     msg: error.msg.message
@@ -66,6 +68,7 @@ class ChangePasswordModal extends Component {
     }
 
     toggle = () => {
+        this.setState({ loading: false })
         this.setState({
             modal: !this.state.modal
         })
@@ -83,6 +86,7 @@ class ChangePasswordModal extends Component {
         const { password } = this.state
         const { userId } = this.props
         const user = { userId, password }
+        this.setState({ loading: true })
         this.props.changePassword(user)
     }
 
@@ -109,7 +113,7 @@ class ChangePasswordModal extends Component {
                                 onChange={this.onChange} required />
 
                             <Button color="dark" style={{ marginTop: '2rem' }} block>
-                                <AiOutlineEdit /> Submit
+                                {this.state.loading ? 'Loading' : (<><AiOutlineEdit /> Submit</>)}
                         </Button>
                         </FormGroup>
                     </Form>

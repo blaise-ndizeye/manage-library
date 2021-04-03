@@ -24,7 +24,8 @@ class RegisterModal extends Component {
         name: '',
         email: '',
         password: '',
-        msg: null
+        msg: null,
+        loading: false
     }
 
     static propTypes = {
@@ -39,6 +40,7 @@ class RegisterModal extends Component {
         const { error, success, networkError } = this.props
         if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
+            this.setState({ loading: true })
             if (error.id === 'REGISTER_FAIL') {
                 this.setState({
                     msg: error.msg.message
@@ -69,6 +71,7 @@ class RegisterModal extends Component {
     }
 
     toggle = () => {
+        this.setState({ loading: false })
         this.props.clearErrors()
         this.setState({
             modal: !this.state.modal
@@ -85,6 +88,7 @@ class RegisterModal extends Component {
         e.preventDefault()
         const { name, email, password, password1 } = this.state
         const newUser = { name, email, password, password1 }
+        this.setState({ loading: true })
         this.props.register(newUser)
 
     }
@@ -97,7 +101,7 @@ class RegisterModal extends Component {
         </NavLink>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle}>
-                <ModalHeader toggle={this.toggle}><BsPersonPlusFill /> Sign Up</ModalHeader>
+                <ModalHeader toggle={this.toggle}> <BsPersonPlusFill /> Sign Up</ModalHeader>
                 <ModalBody>
                     {this.state.msg ? <Alert color="danger">{this.state.msg}</Alert> : null}
                     <Form onSubmit={this.onSubmit}>
@@ -135,7 +139,8 @@ class RegisterModal extends Component {
                                 onChange={this.onChange} required />
 
                             <Button color="dark" style={{ marginTop: '2rem' }} block>
-                                <BsPersonPlusFill /> Sign Up
+                                {this.state.loading ? 'Loading' : (
+                                    <><BsPersonPlusFill /> Sign Up </>)}
                         </Button>
                         </FormGroup>
                     </Form>

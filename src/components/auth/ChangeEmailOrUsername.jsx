@@ -22,7 +22,8 @@ class ChangeEmailOrPasswordModal extends Component {
         modal: false,
         username: '',
         email: '',
-        msg: null
+        msg: null,
+        loading: false
     }
 
     static propTypes = {
@@ -37,6 +38,7 @@ class ChangeEmailOrPasswordModal extends Component {
         if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
 
+            this.setState({ loading: false })
             if (error.id === 'CHANGE_EMAILORUSERNAME_FAIL') {
                 this.setState({
                     msg: error.msg.message
@@ -63,6 +65,7 @@ class ChangeEmailOrPasswordModal extends Component {
     }
 
     toggle = () => {
+        this.setState({ loading: false })
         this.setState({
             modal: !this.state.modal
         })
@@ -86,6 +89,7 @@ class ChangeEmailOrPasswordModal extends Component {
         }
         const { userId } = this.props
         const user = { userId, username, email }
+        this.setState({ loading: true })
         this.props.changeEmailOrUsername(user)
     }
 
@@ -119,7 +123,7 @@ class ChangeEmailOrPasswordModal extends Component {
                                 onChange={this.onChange} />
 
                             <Button color="dark" style={{ marginTop: '2rem' }} block>
-                                <AiOutlineEdit /> Submit
+                                {this.state.loading ? 'Loading' : (<><AiOutlineEdit /> Submit</>)}
                         </Button>
                         </FormGroup>
                     </Form>
