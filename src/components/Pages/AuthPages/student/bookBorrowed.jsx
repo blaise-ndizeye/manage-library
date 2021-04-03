@@ -13,7 +13,7 @@ const BookBorrowed = (props) => {
                 Borrowed Books Details
         </DropdownToggle>
             <DropdownMenu>
-                <DropdownItem header>Date Borrowed: {moment(date).format('LL')}</DropdownItem>
+                <DropdownItem header>Date: {moment(date).format('LL')}</DropdownItem>
                 <DropdownItem header>Book Id: {bookId}</DropdownItem>
                 <DropdownItem header>Book Type: {bookType}</DropdownItem>
                 <DropdownItem header>Book Name: {bookName}</DropdownItem>

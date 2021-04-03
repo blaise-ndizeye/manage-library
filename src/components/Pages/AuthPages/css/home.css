@@ -1,75 +1,74 @@
-
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
 }
 
 h2 {
-    font-size: 28px;
-    font-weight: 100;
-    margin: 10px;
+  font-size: 28px;
+  font-weight: 100;
+  margin: 10px;
 }
 
 h2 span {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 p {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 Link {
-    text-decoration: none;
+  text-decoration: none;
 }
 
-
 .contain {
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 0px;
-    background: transparent;
-    color: #fff;
-    font-family: 'Roboto', sans-serif;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 0px;
+  background: transparent;
+  color: #fff;
+  font-family: "Roboto", sans-serif;
 }
 
 .contain > div {
-    height: 208px;
-    background-size: cover;
-    background-attachment: fixed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    transition: all 0.5s ease-in;
-    background: transparent;
+  height: 208px;
+  background-size: cover;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: all 0.5s ease-in;
+  background: transparent;
 }
 
 .contain > div:hover {
-    opacity: 0.75;
-    transform: scale(0.98);
+  opacity: 0.75;
+  transform: scale(0.98);
 }
 
 .contain > div:nth-of-type(1) {
-    grid-column: 1 / 3;
+  grid-column: 1 / 3;
 }
 
 .contain > div:nth-of-type(6) {
-    grid-column: 3 / 5;
+  grid-column: 3 / 5;
 }
 
 .bg1 {
-    background: transparent;
+  background: transparent;
 }
 .bg2 {
-    background: transparent;
+  background: transparent;
 }
 
 .bg4 {
-    background: transparent;
+  background: transparent;
 }
 
 .bg1 Link {
-    color: whitesmoke;
-    text-decoration: none;
+  color: whitesmoke;
+  text-decoration: none;
 }

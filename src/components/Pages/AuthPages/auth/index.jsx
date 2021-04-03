@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import ChangePasswordModal from '../../../auth/ChangePassword'
 import ChangeEmailOrUsernameModal from '../../../auth/ChangeEmailOrUsername'
 
 import '../css/home.css'
-import { loadUser } from '../../../actions/auth/authActions'
+//import { loadUser } from '../../../actions/auth/authActions'
 import DeleteAllBooksModal from '../../../book/DeleteAllBooks'
 import DeleteAllStudentBorrowersModal from '../../../student/DeleteAllBorrowers'
 import DeleteAllTeacherBorrowersModal from '../../../teacher/DeleteAllBorrowers'
@@ -17,21 +17,21 @@ import DeleteAllTeacherRecordsModal from '../../../teacher/DeleteAllRecords'
 import DeleteAccountModal from '../../../auth/DeleteAccount'
 import PromoteStudentsModal from '../../../student/PromoteAllStudents'
 import DeleteAllFinalistsModal from '../../../student/DeleteAllFinalists'
-import { AiOutlineWarning } from 'react-icons/ai'
+//import { AiOutlineWarning } from 'react-icons/ai'
 
 const Settings = (props) => {
 
     const user = useSelector(state => state.auth.user)
     const isAunthenticated = useSelector(state => state.auth.isAunthenticated)
     const { name, email } = user
-    const dispatch = useDispatch()
+    //const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(loadUser())
+        //dispatch(loadUser())
         if (!user || !isAunthenticated) {
             props.history.push('/')
         }
-    }, [dispatch, name, props.history, user, isAunthenticated])
+    }, [ name, props.history, user, isAunthenticated])
 
     return <div className="contain row">
         <div className="bg1 col-md-4 col-sm-12">
@@ -89,9 +89,11 @@ const Settings = (props) => {
             </Link></p>
         </div>
         <div className="bg1 col-md-7 col-sm-12">
-            <h2 className="text-danger"><AiOutlineWarning /> Once you delete your Account all data will be lost!!</h2>
-            <p className="lead text-warning"><AiOutlineWarning /> Settings Must Be Performed For Serious Reasons!!</p>
-            <p className="lead text-primary"><AiOutlineWarning /> Settings can be performed at any time!!</p>
+            <div className="list-group">
+                <p className="list-group-item bg-dark text-warning"> Once you delete your Account all data will be lost!!</p>
+                <p className="list-group-item bg-dark text-warning"> Settings Must Be Performed For Serious Reasons!!</p>
+                <p className="list-group-item bg-dark text-warning"> Settings can be performed at any time!!</p>
+            </div>
         </div>
     </div>
 
