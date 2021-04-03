@@ -20,7 +20,7 @@ const DeleteAllStudentRecordsModal = (props) => {
 
     const requestAction = () => {
         if (networkError) return networkErrorNotify()
-        setTimeout(() => setLoading(true), 1000)
+        setLoading(true)
         dispatch(deleteAllRecords(userId))
         toggle()
         deleteAllNotify('All student records')
@@ -37,7 +37,7 @@ const DeleteAllStudentRecordsModal = (props) => {
                     Are you sure to delete all Student Records?
                 </ModalBody>
                 <ModalFooter>
-                    <Button block color="danger" onClick={requestAction}>{loading ? 'Loading' : (<><BsFillTrashFill /> OK</>)}</Button>{' '}
+                    <Button disabled={loading} block color="danger" onClick={requestAction}>{loading ? 'Loading' : (<><BsFillTrashFill /> OK</>)}</Button>{' '}
                 </ModalFooter>
             </Modal>
         </>

@@ -27,7 +27,8 @@ class EditTeacherModal extends Component {
         gender: '',
         phone: '',
         msg: null,
-        dropdownOpen: false
+        dropdownOpen: false,
+        loading: false
     }
 
     static propTypes = {
@@ -42,6 +43,7 @@ class EditTeacherModal extends Component {
         const { error, isAunthenticated, success, deleteSuccess, networkError } = this.props
         if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
+            this.setState({ loading: false })
             if (error.id === 'EDIT_TEACHER_FAIL') {
                 this.setState({
                     msg: error.msg.message
@@ -69,6 +71,7 @@ class EditTeacherModal extends Component {
     }
 
     toggle = () => {
+        this.setState({ loading: false })
         this.props.clearErrors()
         this.setState({
             modal: !this.state.modal
@@ -106,6 +109,7 @@ class EditTeacherModal extends Component {
         const teacherId = this.props.teacherId
 
         const updatedTeacher = { firstName, lastName, gender, phone, userId, teacherId }
+        this.setState({ loading: true })
         this.props.editTeacher(updatedTeacher)
     }
     handleGender = async (e) => {
@@ -159,8 +163,8 @@ class EditTeacherModal extends Component {
                                 defaultValue={phone}
                                 onChange={this.onChange} required />
 
-                            <Button type="submit" color="dark" style={{ marginTop: '2rem' }} block>
-                                <AiOutlineEdit /> Edit
+                            <Button disabled={this.state.loading} type="submit" color="dark" style={{ marginTop: '2rem' }} block>
+                                {this.state.loading ? 'Loading' : (<><AiOutlineEdit /> Edit</>)}
                         </Button>
                         </FormGroup>
                     </Form>

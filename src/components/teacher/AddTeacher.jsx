@@ -28,7 +28,8 @@ class AddTeacherModal extends Component {
         gender: '',
         phone: '',
         msg: null,
-        dropdownOpen: false
+        dropdownOpen: false,
+        loading: true
     }
 
     static propTypes = {
@@ -42,7 +43,7 @@ class AddTeacherModal extends Component {
         const { error, isAunthenticated, success, deleteSuccess, networkError } = this.props
         if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
-
+            this.setState({ loading: false })
             if (error.id === 'ADD_TEACHER_FAIL') {
                 this.setState({
                     msg: error.msg.message
@@ -70,6 +71,7 @@ class AddTeacherModal extends Component {
     }
 
     toggle = () => {
+        this.setState({ loading: false })
         this.props.clearErrors()
         this.setState({
             modal: !this.state.modal
@@ -94,7 +96,7 @@ class AddTeacherModal extends Component {
         const userId = this.props.user
 
         const newTeacher = { firstName, lastName, gender, phone, userId }
-
+        this.setState({ loading: true })
         this.props.addTeacher(newTeacher)
     }
 
@@ -145,8 +147,8 @@ class AddTeacherModal extends Component {
                                 className="mb-3"
                                 onChange={this.onChange} required />
 
-                            <Button type="submit" color="dark" style={{ marginTop: '2rem' }} block>
-                                <BsPersonPlusFill /> Add
+                            <Button disabled={this.state.loading} type="submit" color="dark" style={{ marginTop: '2rem' }} block>
+                                {this.state.loading ? 'Loading' : (<><BsPersonPlusFill /> Add</>)}
                         </Button>
                         </FormGroup>
                     </Form>

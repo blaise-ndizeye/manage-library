@@ -161,7 +161,7 @@ class AddStudentModal extends Component {
                                 className="mb-3"
                                 onChange={this.onChange} required />
 
-                            <Button type="submit" color="dark" style={{ marginTop: '2rem' }} block>
+                            <Button disabled={this.state.loading} type="submit" color="dark" style={{ marginTop: '2rem' }} block>
                                 {this.state.loading ? 'Loading': (<><BsPersonPlusFill /> Add</>)}
                         </Button>
                         </FormGroup>

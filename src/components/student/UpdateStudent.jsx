@@ -29,7 +29,8 @@ class EditStudentModal extends Component {
         gender: '',
         age: '',
         msg: null,
-        dropdownOpen: false
+        dropdownOpen: false,
+        loading: false
     }
 
     static propTypes = {
@@ -44,7 +45,7 @@ class EditStudentModal extends Component {
         const { error, isAunthenticated, networkError } = this.props
         if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
-
+            this.setState({ loading: false })
             if (error.id === 'EDIT_STUDENT_FAIL') {
                 this.setState({
                     msg: error.msg.message
@@ -68,7 +69,7 @@ class EditStudentModal extends Component {
     }
 
     toggle = () => {
-
+        this.setState({ loading: false })
         this.props.clearErrors()
 
         this.setState({
@@ -110,7 +111,7 @@ class EditStudentModal extends Component {
         const studentId = this.props.studentId
 
         const updatedStudent = { firstName, lastName, gender, Class, age, userId, studentId }
-
+        this.setState({ loading: true })
         this.props.editStudent(updatedStudent)
         if (this.props.success) {
             updateNotify('student')
@@ -177,8 +178,8 @@ class EditStudentModal extends Component {
                                 defaultValue={age}
                                 onChange={this.onChange} required />
 
-                            <Button type="submit" color="dark" style={{ marginTop: '2rem' }} block>
-                                <AiOutlineEdit /> Edit
+                            <Button disabled={this.state.loading} type="submit" color="dark" style={{ marginTop: '2rem' }} block>
+                                {this.state.loading ? 'Loading' : (<><AiOutlineEdit /> Edit</>)}
                         </Button>
                         </FormGroup>
                     </Form>

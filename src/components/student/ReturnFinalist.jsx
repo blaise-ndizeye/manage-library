@@ -21,7 +21,7 @@ const FinalistReturnModal = (props) => {
 
     const handleReturn = () => {
         if (networkError) return networkErrorNotify()
-        setTimeout(() => setLoading(true), 1000)
+        setLoading(true)
         props.returnForFinalists({ studentId, userId })
         toggle()
         returnNotify()
@@ -38,7 +38,7 @@ const FinalistReturnModal = (props) => {
                     Are you sure to return this finalist's book?
           </ModalBody>
                 <ModalFooter>
-                    <Button block color="warning" onClick={handleReturn}>{loading ? 'Loading' : (<><AiOutlineImport /> OK</>)}</Button>{' '}
+                    <Button disabled={loading} block color="warning" onClick={handleReturn}>{loading ? 'Loading' : (<><AiOutlineImport /> OK</>)}</Button>{' '}
                 </ModalFooter>
             </Modal>
         </div>

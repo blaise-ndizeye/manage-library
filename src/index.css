@@ -4,6 +4,7 @@ body {
   background: url("./components/Pages/AuthPages/images/bg1.jpg") no-repeat
     center center/cover;
   background-attachment: fixed;
+  overflow-x: hidden;
 }
 
 code {

@@ -22,9 +22,10 @@ const DeleteBorrower = (props) => {
 
     const requestAction = () => {
         if (networkError) return networkErrorNotify()
-        setTimeout(() => setLoading(true), 1000)
+        setLoading(true)
         deleteBorrowers({ userId, studentId, bookId, bookType, bookName })
         deleteNotify('Student borrower')
+        toggle()
     }
 
     return (
@@ -38,7 +39,7 @@ const DeleteBorrower = (props) => {
                     Are you sure to delete this borrower?
           </ModalBody>
                 <ModalFooter>
-                    <Button block color="danger" onClick={requestAction}>{loading ? 'Loading' : (<><BsFillTrashFill /> OK</>)}</Button>{' '}
+                    <Button disabled={loading} block color="danger" onClick={requestAction}>{loading ? 'Loading' : (<><BsFillTrashFill /> OK</>)}</Button>{' '}
                 </ModalFooter>
             </Modal>
         </div>

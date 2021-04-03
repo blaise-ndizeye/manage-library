@@ -20,7 +20,7 @@ const DeleteAccountModal = (props) => {
 
     const requestAction = () => {
         if (networkError) return networkErrorNotify()
-        setTimeout(() => setLoading(true), 1000)
+        setLoading(true)
         dispatch(deleteAccount(userId))
         toggle()
         deleteAccountNotify()

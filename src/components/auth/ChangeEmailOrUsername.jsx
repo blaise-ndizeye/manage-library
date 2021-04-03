@@ -122,7 +122,7 @@ class ChangeEmailOrPasswordModal extends Component {
                                 className="mb-3"
                                 onChange={this.onChange} />
 
-                            <Button color="dark" style={{ marginTop: '2rem' }} block>
+                            <Button disabled={this.state.loading} color="dark" style={{ marginTop: '2rem' }} block>
                                 {this.state.loading ? 'Loading' : (<><AiOutlineEdit /> Submit</>)}
                         </Button>
                         </FormGroup>

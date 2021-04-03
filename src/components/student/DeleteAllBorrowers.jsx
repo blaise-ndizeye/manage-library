@@ -20,7 +20,7 @@ const DeleteAllStudentBorrowersModal = (props) => {
 
     const requestAction = () => {
         if (networkError) return networkErrorNotify()
-        setTimeout(() => setLoading(true), 1000)
+        setLoading(true)
         dispatch(deleteAllBorrowers(userId))
         toggle()
         deleteAllNotify('All student borrowers')

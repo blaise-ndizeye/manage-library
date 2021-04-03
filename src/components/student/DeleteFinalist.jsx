@@ -21,7 +21,7 @@ const DeleteFinalistModal = (props) => {
 
     const requestAction = () => {
         if (networkError) return networkErrorNotify()
-        setTimeout(() => setLoading(true), 1000)
+        setLoading(true)
         dispatch(deleteFinalist({ userId, studentId }))
         toggle()
         deleteNotify('Finalist')
@@ -38,7 +38,7 @@ const DeleteFinalistModal = (props) => {
                     Are you sure to delete this finalist borrower?
                 </ModalBody>
                 <ModalFooter>
-                    <Button block color="danger" onClick={requestAction}>{loading ? 'Loading' : (<><BsFillTrashFill /> OK</>)}</Button>{' '}
+                    <Button disabled={loading} block color="danger" onClick={requestAction}>{loading ? 'Loading' : (<><BsFillTrashFill /> OK</>)}</Button>{' '}
                 </ModalFooter>
             </Modal>
         </>

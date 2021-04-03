@@ -20,7 +20,7 @@ const PromoteStudentsModal = (props) => {
 
     const requestAction = () => {
         if (networkError) return networkErrorNotify()
-        setTimeout(() => setLoading(true), 1000)
+        setLoading(true)
         dispatch(promoteStudents(userId))
         toggle()
         promoteNotify()
@@ -37,7 +37,7 @@ const PromoteStudentsModal = (props) => {
                     Are you sure to promote all students and update the repeating ones manually?
                 </ModalBody>
                 <ModalFooter>
-                    <Button block color="danger" onClick={requestAction}> {loading ? 'Loading' : (<><AiOutlineVerticalAlignTop /> OK</>)}</Button>{' '}
+                    <Button disabled={loading} block color="danger" onClick={requestAction}> {loading ? 'Loading' : (<><AiOutlineVerticalAlignTop /> OK</>)}</Button>{' '}
                 </ModalFooter>
             </Modal>
         </>

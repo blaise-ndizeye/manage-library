@@ -138,7 +138,7 @@ class EditBookModal extends Component {
                                 defaultValue={typeOfBooks}
                                 onChange={this.onChange} required />
 
-                            <Button type="submit" color="dark" style={{ marginTop: '2rem' }} block>
+                            <Button disabled={this.state.loading} type="submit" color="dark" style={{ marginTop: '2rem' }} block>
                                 {this.state.loading ? 'Loading' : (<><AiOutlineEdit /> Edit</>)}
                         </Button>
                         </FormGroup>

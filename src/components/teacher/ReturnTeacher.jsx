@@ -23,7 +23,8 @@ class ReturnTeacherModal extends Component {
         modal: false,
         numOfBooks: '',
         msg: null,
-        dropdownOpen: false
+        dropdownOpen: false,
+        loading: false
     }
 
     static propTypes = {
@@ -38,7 +39,7 @@ class ReturnTeacherModal extends Component {
         const { error, isAunthenticated, success, deleteSuccess, networkError } = this.props
         if (networkError) return networkErrorNotify()
         if (error !== prevProps.error) {
-
+            this.setState({ loading: false })
             if (error.id === 'RETURN_TEACHER_FAIL') {
                 this.setState({
                     msg: error.msg.message
@@ -63,7 +64,7 @@ class ReturnTeacherModal extends Component {
     }
 
     toggle = () => {
-
+        this.setState({ loading: false })
         this.props.clearErrors()
         this.setState({
             modal: !this.state.modal
@@ -87,7 +88,7 @@ class ReturnTeacherModal extends Component {
         const { numOfBooks } = this.state
         const { userId, teacherId, bookType, bookName } = this.props
         const newBorrower = { numOfBooks, bookType, bookName, userId, teacherId }
-
+        this.setState({ loading: true })
         this.props.teacherReturnSuccess(newBorrower)
     }
 
@@ -112,8 +113,8 @@ class ReturnTeacherModal extends Component {
                                 className="mb-3"
                                 onChange={this.onChange} required />
 
-                            <Button type="submit" color="dark" style={{ marginTop: '2rem' }} block>
-                                <AiOutlineImport /> OK
+                            <Button disabled={this.state.loading} type="submit" color="dark" style={{ marginTop: '2rem' }} block>
+                               {this.state.loading ? 'Loading' : ( <><AiOutlineImport /> OK</>)}
                         </Button>
                         </FormGroup>
                     </Form>

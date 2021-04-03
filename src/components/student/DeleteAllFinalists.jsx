@@ -21,7 +21,7 @@ const DeleteAllFinalistsModal = (props) => {
 
     const requestAction = () => {
         if (networkError) return networkErrorNotify()
-        setTimeout(() => setLoading(true), 1000)
+        setLoading(true)
         dispatch(deleteAllFinalists(userId))
         toggle()
         deleteAllNotify('All finalist borrowers')

@@ -20,7 +20,7 @@ const DeleteAllBooksModal = (props) => {
 
     const requestAction = () => {
         if (networkError) return networkErrorNotify()
-        setTimeout(() => setLoading(true), 1000)
+        setLoading(true)
         dispatch(deleteAllBooks(userId))
         toggle()
         deleteAllNotify('All books')

@@ -174,7 +174,7 @@ class LendStudentModal extends Component {
                                     onChange={this.onChange} />
                             </div>
 
-                            <Button type="submit" color="dark" style={{ marginTop: '2rem' }} block>
+                            <Button disabled={this.state.loading} type="submit" color="dark" style={{ marginTop: '2rem' }} block>
                                 {this.state.loading ? 'Loading' : (<><AiOutlineExport /> Lend</>)}
                         </Button>
                         </FormGroup>
