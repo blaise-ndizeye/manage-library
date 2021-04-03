@@ -121,7 +121,7 @@ class AddStudentModal extends Component {
 
             <Button outline color="primary" onClick={this.toggle} >
                 <BsPersonPlusFill /> Add Student
-        </Button>
+            </Button>
 
             <Modal isOpen={this.state.modal} toggle={this.toggle}>
                 <ModalHeader toggle={this.toggle}><BsPersonPlusFill /> Add Student</ModalHeader>
