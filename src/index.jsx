@@ -20,7 +20,7 @@ ReactDOM.render(
       }}
     >
       {/* <hr color='blue'/> */}
-      <h4 className="display-6 text-center text-white">
+      <h4 className="card-text text-center text-white" style={{ color: "white" }}>
         <span>&#169;</span> Copyright 2020
       </h4>
     </div>
