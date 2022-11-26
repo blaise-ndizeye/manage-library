@@ -19,7 +19,7 @@ const CardUi = (props) => {
       </div>
       <div className="card-body text-dark">
         <h4 className="card-title text-white">{props.title}</h4>
-        <p className="card-text text-secondary">
+        <p className="card-text" style={{ color: "white" }}>
           {props.title === "Returning Books" && returning}
           {props.title === "Lending Books" && lending}
           {props.title === "Managing Books" && managing}
