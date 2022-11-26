@@ -8,7 +8,7 @@ const CardUi = (props) => {
     return (
         <div className="card text-center shadow bg-transparent">
             <div className="overflow">
-                <img src={props.imgSrc} alt="img" className="card-img-top" />
+                <img src={props.imgSrc} alt="img" className="card-img-top" style={{ maxHeight: "50vh", objectFit: "cover" }} />
             </div>
             <div className="card-body text-dark">
                 <h4 className="card-title text-white">{props.title}</h4>
