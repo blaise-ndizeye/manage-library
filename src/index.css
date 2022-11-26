@@ -5,11 +5,7 @@ body {
     center center/cover;
   background-attachment: fixed;
   overflow-x: hidden;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  padding-bottom: calc(6rem + 6vh);
 }
 
 .Navbar {
