@@ -53,7 +53,6 @@ class RegisterModal extends Component {
           password: "",
           password1: "",
         })
-        registerNotify()
       }
     }
     if (this.state.modal) {
