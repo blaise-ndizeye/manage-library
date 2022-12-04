@@ -1,3 +1,3 @@
-const root = process.env.BACKEND_URL
+const root = "https://manage-library-api.onrender.com"
 
 export default root 
